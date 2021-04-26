@@ -8,6 +8,28 @@ The MDDF can be decomposed in the contributions of each atom of the solute or of
 <img src="./density.png">
 </center>
 
+## How to run this example:
+
+1. Download and install [Julia](https://julialang.org)
+
+2. Install all required packages. Within Julia, do:
+```julia-repl
+julia> ] add ComplexMixtures, PDBTools, Plots, LaTeXStrings, Formatting
+```
+
+3. Get all files: 
+```
+git clone https://github.com/m3g/ComplexMixturesExamples
+```
+
+4. Run the example:
+```
+cd ComplexMixturesExamples/Density
+julia density.jl
+```
+
+## Detailed explanation of the example:
+
 Here, we use the `contourf` function of the `Plots` package of Julia. A detailed explanation of the input file `density.jl` is provide below: 
 
 
