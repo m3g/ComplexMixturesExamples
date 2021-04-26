@@ -18,12 +18,12 @@ julia> ] add ComplexMixtures, PDBTools, Plots, LaTeXStrings, Formatting
 ```
 
 3. Get all files: 
-```julia
+```bash
 git clone https://github.com/m3g/ComplexMixturesExamples
 ```
 
 4. Run the example:
-```julia
+```bash
 cd ComplexMixturesExamples/Density
 julia density.jl
 ```
