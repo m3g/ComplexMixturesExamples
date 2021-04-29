@@ -25,11 +25,13 @@ solvent = CM.Selection(glycerol,natomspermol=14)
 
 # Plot a 2D map showing the contributions of some residues
 residues = collect(eachresidue(protein))
-irange=70:110
 rescontrib = zeros(length(R.mddf),length(residues))
 for (ires,residue) in pairs(residues)
   rescontrib[:,ires] .= CM.contrib(solute,R.solute_atom,residue)
 end
+
+# Build a grid of points around the protein
+voltar
 
 # Plot only for distances within 1.5 and 3.5:
 idmin = findfirst( d -> d > 1.5, R.d)
