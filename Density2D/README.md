@@ -24,7 +24,7 @@ git clone https://github.com/m3g/ComplexMixturesExamples
 
 4. Run the example:
 ```bash
-cd ComplexMixturesExamples/Density
+cd ComplexMixturesExamples/Density2D
 julia density.jl
 ```
 
