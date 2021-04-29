@@ -5,7 +5,7 @@ In this example we compute the density map of Glycerol in the vicinity of a set 
 The MDDF can be decomposed in the contributions of each atom of the solute or of the solvent. Here, we sum up te contributions of all the atoms of each residue of the solute, which is a protein, and plot a density map with the final information. The output figure obtained is:
 
 <center>
-<img src="./density.png">
+<img src="./density2D.png">
 </center>
 
 ## How to run this example:
@@ -25,12 +25,12 @@ git clone https://github.com/m3g/ComplexMixturesExamples
 4. Run the example:
 ```bash
 cd ComplexMixturesExamples/Density2D
-julia density.jl
+julia density2D.jl
 ```
 
 ## Detailed explanation of the example:
 
-Here, we use the `contourf` function of the `Plots` package of Julia. A detailed explanation of the input file `density.jl` is provide below: 
+Here, we use the `contourf` function of the `Plots` package of Julia. A detailed explanation of the input file `density2D.jl` is provide below: 
 
 ### Loading packages that will be used:
 
@@ -120,7 +120,7 @@ contourf(irange,R.d[idmin:idmax],rescontrib[idmin:idmax,irange],
 
 The final figure is saved as a `pdf` file:
 ```julia
-savefig("./density.pdf")
+savefig("./density2D.pdf")
 ```
 
 
