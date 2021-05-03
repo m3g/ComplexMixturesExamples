@@ -1,13 +1,5 @@
-using Plots
-using LaTeXStrings
-using Formatting
 using ComplexMixtures, PDBTools
 const CM = ComplexMixtures
-
-# Default plot options (too look good with LaTeXStrings)
-plot_font = "Computer Modern"
-default(fontfamily=plot_font,
-        linewidth=2, framestyle=:box, label=nothing)
 
 # PDB file of the system simulated
 pdb = readPDB("../Data/system.pdb")
@@ -19,13 +11,15 @@ R = CM.load("../Data/results_glyc50.json")
 protein = select(pdb,"protein")
 solute = CM.Selection(protein,nmols=1)
 
-# Inform which is the solvent
-glycerol = select(pdb,"resname GLYC")
-solvent = CM.Selection(glycerol,natomspermol=14)
+# Compute the 3D density grid and output it to the PDB file
+# here we use dmax=3.5 such that the the output file is not too large
+grid = CM.grid3D(solute=solute,
+                 solute_atoms=protein,
+                 mddf_result=R,
+                 output_file="grid.pdb",
+                 dmin=1.5,dmax=3.5)
 
-#include("./mddf3D.jl")
 
-#mddf_setgrid3D(solute,protein,R,)
 
 
 
