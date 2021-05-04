@@ -1,12 +1,22 @@
-# 2D residue contribution density map
+# 3D residue contribution density map
 
-In this example we compute the density map of Glycerol in the vicinity of a set of residues of a protein, from the minimum-distance distribution function. 
+In this example we compute three-dimensional representations of the density map of Glycerol in the vicinity of a set of residues of a protein, from the minimum-distance distribution function. 
 
-The MDDF can be decomposed in the contributions of each atom of the solute or of the solvent. Here, we sum up te contributions of all the atoms of each residue of the solute, which is a protein, and plot a density map with the final information. The output figure obtained is:
+Here, the MDDF is decomposed at each distance according to the contributions of each *solute* residue. The grid is created such that, at each point in space around the protein, it is possible to identify:
+
+1. Which atom is the closest atom of the solute to that point.
+
+2. Which is the contribution of that atom (or residue) to the distribution function.
+
+Therefore, by filtering the 3D density map at each distance one can visualize over the solute structure which are the regions that mostly interact with the solvent of choice at each distance. Typical images of such a density are:
+
+A short tutorial video showing how to open the intput and output PDB files in VMD and produce images of the density is available at [this link](https://youtu.be/V4Py44IKDh8). 
 
 <center>
-<img src="./density.png">
+<img src="./density3D.png">
 </center>
+
+In the figure on the left...
 
 ## How to run this example:
 
@@ -14,8 +24,10 @@ The MDDF can be decomposed in the contributions of each atom of the solute or of
 
 2. Install all required packages. Within Julia, do:
 ```julia
-julia> ] add ComplexMixtures, PDBTools, Plots, LaTeXStrings, Formatting
+julia> ] add ComplexMixtures, PDBTools
 ```
+
+(to exit Julia use `exit()` or `Control-d`
 
 3. Get all files: 
 ```bash
@@ -24,9 +36,15 @@ git clone https://github.com/m3g/ComplexMixturesExamples
 
 4. Run the example:
 ```bash
-cd ComplexMixturesExamples/Density2D
-julia density.jl
+cd ComplexMixturesExamples/Density3D
+julia density3D.jl
 ```
+
+This will create (actually overwrite) the `grid.pdb` file. Here we provide a previously setup VMD session that contains the data with the visualization choices used to generate the figure above. Load it with:
+
+```bash
+vmd -e grid.vmd
+``` 
 
 ## Detailed explanation of the example:
 
