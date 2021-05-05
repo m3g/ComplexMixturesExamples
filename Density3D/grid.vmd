@@ -343,13 +343,13 @@ display dof_focaldist 0.700000
 mol new grid.pdb type pdb first 0 last -1 step 1 filebonds 1 autobonds 1 waitfor all
 mol delrep 0 top
 mol representation QuickSurf 1.000000 0.500000 1.000000 1.000000
-mol color Name
+mol color Beta
 mol selection {occupancy < 2.0 and beta > 0.2}
 mol material Transparent
 mol addrep top
 mol selupdate 0 top 0
 mol colupdate 0 top 0
-mol scaleminmax top 0 0.000000 0.000000
+mol scaleminmax top 0 0.000000 1.000000
 mol smoothrep top 0 0
 mol drawframes top 0 {now}
 mol clipplane center 0 0 top {0.0 0.0 0.0}
@@ -376,15 +376,49 @@ mol clipplane center 5 0 top {0.0 0.0 0.0}
 mol clipplane color  5 0 top {0.5 0.5 0.5 }
 mol clipplane normal 5 0 top {0.0 0.0 1.0}
 mol clipplane status 5 0 top {0}
+mol representation VDW 0.500000 14.000000
+mol color ResType
+mol selection {occupancy > 2.0 and beta > 0.1}
+mol material Diffuse
+mol addrep top
+mol selupdate 1 top 0
+mol colupdate 1 top 0
+mol scaleminmax top 1 0.000000 0.000000
+mol smoothrep top 1 0
+mol drawframes top 1 {now}
+mol clipplane center 0 1 top {0.0 0.0 0.0}
+mol clipplane color  0 1 top {0.5 0.5 0.5 }
+mol clipplane normal 0 1 top {0.0 0.0 1.0}
+mol clipplane status 0 1 top {0}
+mol clipplane center 1 1 top {0.0 0.0 0.0}
+mol clipplane color  1 1 top {0.5 0.5 0.5 }
+mol clipplane normal 1 1 top {0.0 0.0 1.0}
+mol clipplane status 1 1 top {0}
+mol clipplane center 2 1 top {0.0 0.0 0.0}
+mol clipplane color  2 1 top {0.5 0.5 0.5 }
+mol clipplane normal 2 1 top {0.0 0.0 1.0}
+mol clipplane status 2 1 top {0}
+mol clipplane center 3 1 top {0.0 0.0 0.0}
+mol clipplane color  3 1 top {0.5 0.5 0.5 }
+mol clipplane normal 3 1 top {0.0 0.0 1.0}
+mol clipplane status 3 1 top {0}
+mol clipplane center 4 1 top {0.0 0.0 0.0}
+mol clipplane color  4 1 top {0.5 0.5 0.5 }
+mol clipplane normal 4 1 top {0.0 0.0 1.0}
+mol clipplane status 4 1 top {0}
+mol clipplane center 5 1 top {0.0 0.0 0.0}
+mol clipplane color  5 1 top {0.5 0.5 0.5 }
+mol clipplane normal 5 1 top {0.0 0.0 1.0}
+mol clipplane status 5 1 top {0}
 mol rename top grid.pdb
-set viewpoints([molinfo top]) {{{1 0 0 0.0556225} {0 1 0 -0.216755} {0 0 1 -0.0159188} {0 0 0 1}} {{0.397314 -0.796604 0.455586 0} {-0.916018 -0.374148 0.144645 0} {0.0552328 -0.474795 -0.878359 0} {0 0 0 1}} {{0.0408026 0 0 0} {0 0.0408026 0 0} {0 0 0.0408026 0} {0 0 0 1}} {{1 0 0 0} {0 1 0 0} {0 0 1 0} {0 0 0 1}}}
+set viewpoints([molinfo top]) {{{1 0 0 0.0556225} {0 1 0 -0.216755} {0 0 1 -0.0159188} {0 0 0 1}} {{0.624598 -0.625817 0.467104 0} {-0.616869 -0.762166 -0.196286 0} {0.478861 -0.165546 -0.862107 0} {0 0 0 1}} {{0.0408026 0 0 0} {0 0.0408026 0 0} {0 0 0.0408026 0} {0 0 0 1}} {{1 0 0 0} {0 1 0 0} {0 0 1 0} {0 0 0 1}}}
 lappend viewplist [molinfo top]
 # done with molecule 0
 mol new /home/leandro/Drive/Papers/ComplexMixtures/ComplexMixturesExamples/Data/system.pdb type pdb first 0 last -1 step 1 filebonds 1 autobonds 1 waitfor all
 mol delrep 0 top
-mol representation Cartoon 2.100000 24.000000 5.000000
+mol representation VDW 0.900000 14.000000
 mol color Name
-mol selection {protein}
+mol selection {protein and resid 14 181 271 275 186}
 mol material Opaque
 mol addrep top
 mol selupdate 0 top 0
@@ -416,8 +450,42 @@ mol clipplane center 5 0 top {0.0 0.0 0.0}
 mol clipplane color  5 0 top {0.5 0.5 0.5 }
 mol clipplane normal 5 0 top {0.0 0.0 1.0}
 mol clipplane status 5 0 top {0}
+mol representation Cartoon 2.100000 24.000000 5.000000
+mol color Name
+mol selection {protein}
+mol material Opaque
+mol addrep top
+mol selupdate 1 top 0
+mol colupdate 1 top 0
+mol scaleminmax top 1 0.000000 0.000000
+mol smoothrep top 1 0
+mol drawframes top 1 {now}
+mol clipplane center 0 1 top {0.0 0.0 0.0}
+mol clipplane color  0 1 top {0.5 0.5 0.5 }
+mol clipplane normal 0 1 top {0.0 0.0 1.0}
+mol clipplane status 0 1 top {0}
+mol clipplane center 1 1 top {0.0 0.0 0.0}
+mol clipplane color  1 1 top {0.5 0.5 0.5 }
+mol clipplane normal 1 1 top {0.0 0.0 1.0}
+mol clipplane status 1 1 top {0}
+mol clipplane center 2 1 top {0.0 0.0 0.0}
+mol clipplane color  2 1 top {0.5 0.5 0.5 }
+mol clipplane normal 2 1 top {0.0 0.0 1.0}
+mol clipplane status 2 1 top {0}
+mol clipplane center 3 1 top {0.0 0.0 0.0}
+mol clipplane color  3 1 top {0.5 0.5 0.5 }
+mol clipplane normal 3 1 top {0.0 0.0 1.0}
+mol clipplane status 3 1 top {0}
+mol clipplane center 4 1 top {0.0 0.0 0.0}
+mol clipplane color  4 1 top {0.5 0.5 0.5 }
+mol clipplane normal 4 1 top {0.0 0.0 1.0}
+mol clipplane status 4 1 top {0}
+mol clipplane center 5 1 top {0.0 0.0 0.0}
+mol clipplane color  5 1 top {0.5 0.5 0.5 }
+mol clipplane normal 5 1 top {0.0 0.0 1.0}
+mol clipplane status 5 1 top {0}
 mol rename top system.pdb
-set viewpoints([molinfo top]) {{{1 0 0 0.0556225} {0 1 0 -0.216755} {0 0 1 -0.0159188} {0 0 0 1}} {{0.397314 -0.796604 0.455586 0} {-0.916018 -0.374148 0.144645 0} {0.0552328 -0.474795 -0.878359 0} {0 0 0 1}} {{0.0408026 0 0 0} {0 0.0408026 0 0} {0 0 0.0408026 0} {0 0 0 1}} {{1 0 0 0} {0 1 0 0} {0 0 1 0} {0 0 0 1}}}
+set viewpoints([molinfo top]) {{{1 0 0 0.0556225} {0 1 0 -0.216755} {0 0 1 -0.0159188} {0 0 0 1}} {{0.624598 -0.625817 0.467104 0} {-0.616869 -0.762166 -0.196286 0} {0.478861 -0.165546 -0.862107 0} {0 0 0 1}} {{0.0408026 0 0 0} {0 0.0408026 0 0} {0 0 0.0408026 0} {0 0 0 1}} {{1 0 0 0} {0 1 0 0} {0 0 1 0} {0 0 0 1}}}
 lappend viewplist [molinfo top]
 set topmol [molinfo top]
 # done with molecule 1
@@ -444,7 +512,7 @@ color scale colors GWB {0.0 1.0 0.0} {1.0 1.0 1.0} {0.0 0.0 1.0}
 color scale colors BWG {0.0 0.0 1.0} {1.0 1.0 1.0} {0.0 1.0 0.0}
 color scale colors BlkW {0.0 0.0 0.0} {0.5 0.5 0.5} {1.0 1.0 1.0}
 color scale colors WBlk {1.0 1.0 1.0} {0.5 0.5 0.5} {0.0 0.0 0.0}
-  color scale method RWB
+  color scale method BWR
   set colorcmds {
     {color Display {Background} white}
     {color Display {BackgroundTop} black}
@@ -584,8 +652,6 @@ color scale colors WBlk {1.0 1.0 1.0} {0.5 0.5 0.5} {0.0 0.0 0.0}
     {color Molecule {grid.pdb} blue}
     {color Molecule {1} red}
     {color Molecule {system.pdb} red}
-    {color Molecule {2} yellow}
-    {color Molecule {3} tan}
     {color Structure {3_10_Helix} blue}
     {color Surface {Grasp} gray}
     {color Labels {Springs} orange}
