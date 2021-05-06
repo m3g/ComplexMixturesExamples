@@ -106,7 +106,7 @@ savefig("./mddf.pdf")
 
 This will produce the following plot:
 
-<img width=70% src="./mddf.png">
+<img width=100% src="./mddf.png">
 
 # Atomic contributions to the MDDF
 hydroxils = ["O1","O2","O3","H1","H2","H3"]
