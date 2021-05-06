@@ -1,7 +1,7 @@
 # ComplexMixturesExamples
 ### Examples provided for the ComplexMixtures package.
 
-The following examples consider a system composed a protein solvated by a mixture of water and glycerol, built with [Packmol](http://m3g.iqm.unicamp.br/packmol). The simulations were perfomed with NAMD with periodic boundary conditions and a NPT ensemble at room temperature and pressure. 
+The following examples consider a system composed a protein solvated by a mixture of water and glycerol, built with [Packmol](http://m3g.iqm.unicamp.br/packmol). The simulations were perfomed with [NAMD](https://www.ks.uiuc.edu/Research/namd/) with periodic boundary conditions and a NPT ensemble at room temperature and pressure. Molecular pictures were produced with [VMD](https://www.ks.uiuc.edu/Research/vmd/) and plots were produced with [Julia](https://julialang.org)'s [Plots](http://docs.juliaplots.org/latest/) library.
 
 <img width=50% src="./Data/system.png">
 
