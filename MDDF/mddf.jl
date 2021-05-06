@@ -42,13 +42,13 @@ plot!(size=(800,300),margin=4mm)
 savefig("./mddf.pdf")
 
 # Atomic contributions to the MDDF
-hydroxils = ["O1","O2","O3","H1","H2","H3"]
-hydr_contrib = CM.contrib(solvent,results.solvent_atom,hydroxils)
+hydroxyls = ["O1","O2","O3","H1","H2","H3"]
 aliphatic = ["C1","C2","HA","HB","HC","HD"]
+hydr_contrib = CM.contrib(solvent,results.solvent_atom,hydroxyls)
 aliph_contrib = CM.contrib(solvent,results.solvent_atom,aliphatic)
 
 plot(results.d,results.mddf,xlabel=L"r/\AA",ylabel="mddf",size=(600,400))
-plot!(results.d,hydr_contrib,label="Hydroxils")
+plot!(results.d,hydr_contrib,label="Hydroxyls")
 plot!(results.d,aliph_contrib,label="Aliphatic chain")
 hline!([1],linestyle=:dash,linecolor=:gray)
 savefig("./mddf_atom_contrib.pdf")

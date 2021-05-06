@@ -80,6 +80,8 @@ Results are loaded, and now we can plot the data obtained.
 
 ## Produce plots
 
+### MDDF and Kirkwood-Buff integrals
+
 Load some packages that we will use to produce the plots:
 ```julia
 using Plots, Plots.PlotMeasures, LaTeXStrings
@@ -108,17 +110,41 @@ This will produce the following plot:
 
 <img width=100% src="./mddf.png">
 
-# Atomic contributions to the MDDF
-hydroxils = ["O1","O2","O3","H1","H2","H3"]
-hydr_contrib = CM.contrib(solvent,results.solvent_atom,hydroxils)
-aliphatic = ["C1","C2","HA","HB","HC","HD"]
-aliph_contrib = CM.contrib(solvent,results.solvent_atom,aliphatic)
+### Atomic contributions to the MDDF
 
+Selecting the atoms corresponding to the hydroxyl groups, and of the aliphatic carbons of Glycerol. Here we list the types of the atoms as specified by the force-field.
+```julia
+hydroxyls = ["O1","O2","O3","H1","H2","H3"]
+aliphatic = ["C1","C2","HA","HB","HC","HD"]
+```
+
+The `contrib` function of `ComplexMixtures` will extract from the result the contributions of each set of atoms to the total MDDF:
+
+```julia
+hydr_contrib = CM.contrib(solvent,results.solvent_atom,hydroxyls)
+aliph_contrib = CM.contrib(solvent,results.solvent_atom,aliphatic)
+```
+
+And, finally, here we plot these group contributions on top of the total MDDF:
+
+```julia
 plot(results.d,results.mddf,xlabel=L"r/\AA",ylabel="mddf",size=(600,400))
 plot!(results.d,hydr_contrib,label="Hydroxils")
 plot!(results.d,aliph_contrib,label="Aliphatic chain")
 hline!([1],linestyle=:dash,linecolor=:gray)
 savefig("./mddf_atom_contrib.pdf")
+```
+
+This will produce the following figure:
+
+<img width=70% src="./mddf_atom_contrib.png">
+
+Note how hydroxyl clearly are the sole contribution to the peak at ~1.9 Angstroms, corresponding to hydrogen-bonding interactions. The aliphatic groups contribute importantly to the shoulder at larger distances, which correspond to non-specific interactions. 
+
+
+
+
+
 
 
 
