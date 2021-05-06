@@ -5,7 +5,7 @@ const CM = ComplexMixtures
 # Load PDB file of the system
 atoms = readPDB("../Data/system.pdb")
 
-# Select the protein and the TMAO molecules
+# Select the protein and the GLYC molecules
 protein = select(atoms,"protein")
 glyc = select(atoms,"resname GLYC")
 
@@ -27,7 +27,7 @@ CM.save(results,"./glyc50.json")
 results = CM.load("../Data/results_glyc50.json")
 
 # Produce plots
-using Plots, Plots.PlotMeasures, LaTeXStrings, Images
+using Plots, Plots.PlotMeasures, LaTeXStrings
 default(fontfamily="Computer Modern",
         linewidth=2, framestyle=:box, label=nothing, grid=false)
 
