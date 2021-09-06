@@ -1,13 +1,19 @@
 # ComplexMixtures.jl Example
 
-## Polyacrylate in DMF
+## Polyacrylamide in DMF
 
-![image](system.png)
+<img height=300px src="./system.png">
 
-Molecules built with:
+
+## References
+
+Molecules built with JSME:
 
 B. Bienfait and P. Ertl, JSME: a free molecule editor in JavaScript, Journal of Cheminformatics 5:24 (2013)
 http://biomodel.uah.es/en/DIY/JSME/draw.en.htm
+
+System built with Packmol: 
+
 
 
 
