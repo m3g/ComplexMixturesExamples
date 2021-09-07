@@ -2,15 +2,15 @@
 # Author: Jan Saam,  saam@charite.de
 
 # input
-#coordinates             acr_in_dmf-ready.pdb
-coordinates             equilibrated.coor
-structure               membrane_ready.psf
+coordinates             ../equilibrated.pdb
+structure               ../membrane_ready.psf
 
 parameters              /home/leandro/programs/toppar/charmm/par_all36_prot.prm
 parameters              /home/leandro/programs/toppar/charmm/par_all36_na.prm
 parameters              /home/leandro/programs/toppar/charmm/par_all36_carb.prm
+parameters              /home/leandro/programs/toppar/charmm/par_all36_lipid.prm
 parameters              /home/leandro/programs/toppar/charmm/par_all36_cgenff.prm
-parameters              ./water_cla.prm
+parameters              ../water_cla.prm
 paratypecharmm          on
 
 # output
@@ -47,10 +47,7 @@ nonbondedFreq           2
 fullElectFrequency      4
 
 # Periodic boundary conditions
-#cellBasisVector1     63       0.       0.
-#cellBasisVector2      0.     63       0.
-#cellBasisVector3      0.       0.      63
-extendedSystem equilibrated.xsc
+extendedSystem ../equilibrated.xsc
 wrapAll             on
 
 # Temperature scaling
