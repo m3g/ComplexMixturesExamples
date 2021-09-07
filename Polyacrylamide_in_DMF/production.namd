@@ -3,7 +3,7 @@
 
 # input
 #coordinates             acr_in_dmf-ready.pdb
-coordinates             equilibrated.pdb
+coordinates             equilibrated.coor
 structure               acr_in_dmf-ready.psf
 
 parameters              /home/leandro/programs/toppar/charmm/par_all36_prot.prm
@@ -37,12 +37,12 @@ rigidBonds all
 switching               on
 switchdist              10
 cutoff                  12
-pairlistdist            14
+pairlistdist            15
 
 # Multiple timestepping
 firsttimestep           0
 timestep                2
-stepspercycle           10
+stepspercycle           4
 nonbondedFreq           2
 fullElectFrequency      4
 
@@ -74,7 +74,7 @@ langevinPistonDecay   100.
 langevinPistonTemp    298.15 
 
 # Temperature control
-set temperature         298
+set temperature         298.15
 temperature             $temperature;  # initial temperature
 
 # Scripting (200 ns)
