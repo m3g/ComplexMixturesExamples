@@ -2,8 +2,9 @@
 
 ## Polyacrylamide in DMF
 
-<img height=300px src="./system.png">
+In this example we illustrate how the solvation structure of a polymer can be studied with ComplexMixtures.jl. The system is a 4-mer segment of polyacrylamide (PAE - capped with methyl groups), solvated with dimethylformamide (DMF). The system is interesting because of the different functional groups and polarities involved in the interactions of DMF with PAE. A snapshot of the system is shown below. 
 
+<center><img height=300px src="./system.png"></center>
 
 ## References
 
