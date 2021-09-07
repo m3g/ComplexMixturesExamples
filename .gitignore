@@ -24,6 +24,7 @@ docs/site/
 # environment.
 Manifest.toml
 
+*work*
 *tmp_files*
 *BAK
 FFTW*
