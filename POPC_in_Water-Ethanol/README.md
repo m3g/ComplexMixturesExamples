@@ -1,4 +1,4 @@
-# ComplexMixtures.jl
+# ComplexMixtures.jl - Example
 
 ## POPC membrane solvated by water and ethanol
 

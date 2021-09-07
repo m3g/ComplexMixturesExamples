@@ -1,4 +1,4 @@
-# ComplexMixtures.jl Example
+# ComplexMixtures.jl - Example
 
 ## Polyacrylamide in DMF
 
