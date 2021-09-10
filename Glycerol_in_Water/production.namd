@@ -5,12 +5,12 @@
 coordinates             ../equilibrated.pdb
 structure               ../mixture-ready.psf
 
-parameters              /home/leandro/programs/toppar/charmm/par_all36_prot.prm
-parameters              /home/leandro/programs/toppar/charmm/par_all36_na.prm
-parameters              /home/leandro/programs/toppar/charmm/par_all36_carb.prm
-parameters              /home/leandro/programs/toppar/charmm/par_all36_lipid.prm
-parameters              /home/leandro/programs/toppar/charmm/par_all36_cgenff.prm
-parameters              ../water_cla.prm
+parameters              ../../parameters/par_all36_prot.prm
+parameters              ../../parameters/par_all36_na.prm
+parameters              ../../parameters/par_all36_carb.prm
+parameters              ../../parameters/par_all36_lipid.prm
+parameters              ../../parameters/par_all36_cgenff.prm
+parameters              ../../parameters/water_cla.prm
 paratypecharmm          on
 
 # output
