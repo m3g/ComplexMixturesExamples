@@ -9,7 +9,7 @@ plot_font = "Computer Modern"
 default(fontfamily=plot_font,linewidth=2, framestyle=:box, label=nothing, grid=false)
 scalefontsizes()
 
-system = readPDB("./equilibrated.pdb")
+system = readPDB("./simulation/equilibrated.pdb")
 
 # The results will be loaded from previous computations. The original
 # code for computing the distributions is commented.
@@ -28,7 +28,7 @@ solute = Selection(glyc,natomspermol=14)
 #save(mddf_glyc,"mddf_glyc.json")
 
 # Load previously computed data
-mddf_glyc = load("./mddf_glyc.json")
+mddf_glyc = load("./results/mddf_glyc.json")
 
 # Plot the glycerol auto-correlation function and KB integral
 plot(layout=(2,1))
@@ -40,7 +40,7 @@ plot!(xlim=(0,20),subplot=1)
 y = movavg(mddf_glyc.kb,n=10).x
 plot!(x,y,xlabel=L"\textrm{Distance / \AA}",ylabel=L"\textrm{KB~/~cm^3~mol^{-1}}",subplot=2)
 plot!(xlim=(0,20),subplot=2)
-savefig("mddf_kb.png")
+savefig("./results/mddf_kb.png")
 
 # Plot some group contributions to the MDDF
 hydroxyls = ["O1","O2","O3","HO1","HO2","HO3"]
@@ -61,14 +61,14 @@ plot!(
     xlabel=L"\textrm{Distance / \AA}",
     ylabel="MDDF"
 )
-savefig("mddf_glyc_groups.png")
+savefig("./results/mddf_glyc_groups.png")
 
 # Interactions of glycerol with water
 solvent = Selection(water,natomspermol=3)
 #traj = Trajectory(trajectory_file,solute,solvent)
 #mddf_water_glyc = mddf(traj,opt)
 #save(mddf_water_glyc,"mddf_water_glyc.json")
-mddf_water_glyc = load("./mddf_water_glyc.json")
+mddf_water_glyc = load("./results/mddf_water_glyc.json")
 
 x = mddf_water_glyc.d
 y = movavg(mddf_water_glyc.mddf,n=10).x
@@ -86,7 +86,7 @@ plot!(
     xlabel=L"\textrm{Distance / \AA}",
     ylabel="MDDF",
 )
-savefig("mddf_water_glyc.png")
+savefig("./results/mddf_water_glyc.png")
 
 # 2D plot of group contributions
 groups = [
@@ -115,7 +115,7 @@ contourf(
     xlabel="Group",ylabel=L"r/\AA",
     xticks=(1:length(groups),labels),xrotation=60,
 )
-savefig("map2D_glyc_glyc.png")
+savefig("./results/map2D_glyc_glyc.png")
 
 
 
