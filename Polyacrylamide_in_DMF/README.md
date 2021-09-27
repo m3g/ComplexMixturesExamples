@@ -6,6 +6,22 @@ In this example we illustrate how the solvation structure of a polymer can be st
 
 <center><img height=300px src="./system.png"></center>
 
+## Minimum-distance distribution function and KB integral
+
+![](./results/mddf_kb.png)
+
+## Group contributions of DMF
+
+![](./results/mddf_dmf_groups.png)
+
+## Group contributions of PolyACR
+
+![](./results/mddf_acr_groups.png)
+
+## Solvation along the polymer chain
+
+![](./results/map2D_acr.png)
+
 ## References
 
 Molecules built with JSME:

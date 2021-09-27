@@ -25,7 +25,7 @@ solute = Selection(glyc,natomspermol=14)
 
 #opt = ComplexMixtures.Options(dbulk=20.)
 #mddf_glyc = mddf(traj,opt)
-#save(mddf_glyc,"mddf_glyc.json")
+#save(mddf_glyc,"./results/mddf_glyc.json")
 
 # Load previously computed data
 mddf_glyc = load("./results/mddf_glyc.json")
@@ -67,7 +67,7 @@ savefig("./results/mddf_glyc_groups.png")
 solvent = Selection(water,natomspermol=3)
 #traj = Trajectory(trajectory_file,solute,solvent)
 #mddf_water_glyc = mddf(traj,opt)
-#save(mddf_water_glyc,"mddf_water_glyc.json")
+#save(mddf_water_glyc,"./results/mddf_water_glyc.json")
 mddf_water_glyc = load("./results/mddf_water_glyc.json")
 
 x = mddf_water_glyc.d
