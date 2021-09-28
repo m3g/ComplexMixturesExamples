@@ -16,29 +16,15 @@ default(
 )
 scalefontsizes(); scalefontsizes(1.3)
 
+# Load system PDB file
 system = readPDB("./simulation/equilibrated.pdb")
-
-# The results will be loaded from previous computations. The original
-# code for computing the distributions is commented.
-trajectory_file = "../trajectories/traj_Glyc.dcd"
 
 # Select the atoms corresponding to glycerol and water
 glyc = select(system,"resname GLLM")
 water = select(system,"water")
 
-# Compute glyc-glyc auto correlation 
+# Set the solute structure for Glycerol, used to extract atomic contributions
 solute = Selection(glyc,natomspermol=14)
-#traj = Trajectory(trajectory_file,solute)
-#opt = ComplexMixtures.Options(dbulk=20.)
-#mddf_glyc = mddf(traj,opt)
-#save(mddf_glyc,"./results/mddf_glyc.json")
-
-# Compute water-glyc correlation 
-#solvent = Selection(water,natomspermol=3)
-#traj = Trajectory(trajectory_file,solute,solvent)
-#opt = ComplexMixtures.Options(dbulk=20.)
-#mddf_water_glyc = mddf(traj,opt)
-#save(mddf_glyc,"./results/mddf_glyc.json")
 
 # Load previously computed data
 mddf_glyc = load("./results/mddf_glyc.json")
@@ -53,7 +39,7 @@ x = mddf_water_glyc.d
 y = movavg(mddf_water_glyc.mddf,n=10).x
 plot!(x,y,label="Water")
 plot!(
-    xlabel=L"\textrm{Distance / \AA}",ylabel="MDDF",
+    ylabel="MDDF",
     xlim=(1.5,8),subplot=1
 )
 
@@ -84,7 +70,6 @@ y = movavg(aliphatic_contrib,n=10).x
 plot!(x,y,label="Aliphatic contributions",subplot=1)
 plot!(
     xlim=(1,8),
-    xlabel=L"\textrm{Distance / \AA}",
     ylabel="MDDF",
     subplot=1
 )
@@ -101,6 +86,7 @@ y = movavg(aliphatic_contrib,n=10).x
 plot!(x,y,label="Aliphatic contributions",subplot=2)
 plot!(
     xlim=(1,8),
+    xlabel=L"\textrm{Distance / \AA}",
     ylabel="MDDF",
     subplot=2
 )
@@ -124,13 +110,35 @@ idmin = findfirst( d -> d > 1.5, mddf_glyc.d)
 idmax = findfirst( d -> d > 3.0, mddf_glyc.d)
 labels = [ "OH", L"\textrm{CH_2}", "OH", "CH", L"\textrm{CH_2}", "OH" ] 
 
-contourf(
+plot(layout=(2,1))
+contourf!(
     1:length(groups),
     mddf_glyc.d[idmin:idmax],
     group_contrib[idmin:idmax,:],
     color=cgrad(:tempo),linewidth=1,linecolor=:black,
     colorbar=:none,levels=5,
-    xlabel="Group",ylabel=L"r/\AA",
     xticks=(1:length(groups),labels),xrotation=60,
+    ylabel=L"r/\AA",
+    subplot=1
 )
+
+group_contrib = zeros(length(mddf_glyc.d),length(groups))
+for (igroup, group) in pairs(groups)
+    group_contrib[:,igroup] .= contrib(solute,mddf_water_glyc.solute_atom,group[1])
+end
+contourf!(
+    1:length(groups),
+    mddf_glyc.d[idmin:idmax],
+    group_contrib[idmin:idmax,:],
+    color=cgrad(:tempo),linewidth=1,linecolor=:black,
+    colorbar=:none,levels=5,
+    xticks=(1:length(groups),labels),xrotation=60,
+    ylabel=L"r/\AA",
+    subplot=2
+)
+plot!(
+    xlabel="Glycerol group",
+    subplot=2
+)
+
 savefig("./results/map2D_glyc_glyc.png")

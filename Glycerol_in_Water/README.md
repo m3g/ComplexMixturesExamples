@@ -6,19 +6,17 @@ This example illustrates the use of ComplexMixtures.jl to study the solution str
 
 <center><img width=300px src="./system.png"></center>
 
-## Glycerol auto-correlation function 
+## Glycerol-Glycerol and Water-Glycerol distribution functions
 
 ![](./results/mddf_kb.png)
 
-## Group contributions to Glyc-Glyc correlation 
+## Glycerol group contributions to MDDFs
 
-![](./results/mddf_glyc_groups.png)
+![](./results/mddf_groups.png)
+
+## 2D map of group contributions
 
 ![](./results/map2D_glyc_glyc.png)
-
-## Glycerol-Water correlation
-
-![](./results/mddf_water_glyc.png)
 
 
 ## References
