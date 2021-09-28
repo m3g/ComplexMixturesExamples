@@ -134,7 +134,7 @@ plot!(
 savefig("./results/mddf_popc_water_groups.png")
 
 # Map of interactions of ethanol with Oleoyl groups
-groups = [
+oleoyl_groups = [
   (["O22","C21"],"CO"),
   (["H2R","H2S","C22"],L"\textrm{CH_2}"),
   (["C23","H3R","H3S"],L"\textrm{CH_2}"),
@@ -155,27 +155,27 @@ groups = [
   (["C218","H18R","H18S","H18T"],L"\textrm{CH_3}"),
 ]
 
-gcontrib = zeros(length(mddf_ethanol_POPC.d),length(groups))
+gcontrib = zeros(length(mddf_ethanol_POPC.d),length(oleoyl_groups))
 for (ig, group) in pairs(groups)
     gcontrib[:,ig] .= movavg(contrib(solute,mddf_ethanol_POPC.solute_atom,group[1]),n=10).x
 end
-labels = [ groups[i][2] for i in 1:length(groups) ]
+labels = [ oleoyl_groups[i][2] for i in 1:length(oleoyl_groups) ]
 idmin = findfirst( d -> d > 1.5, mddf_ethanol_POPC.d)
 idmax = findfirst( d -> d > 3.0, mddf_ethanol_POPC.d)
 
 plot(layout=(2,1))
 contourf!(
-    1:length(groups),
+    1:length(oleoyl_groups),
     mddf_ethanol_POPC.d[idmin:idmax],
     gcontrib[idmin:idmax,:],
     color=cgrad(:tempo),linewidth=1,linecolor=:black,
     colorbar=:none,levels=10,
     ylabel=L"r/\AA",xrotation=60,
-    xticks=(1:length(groups),labels),subplot=1
+    xticks=(1:length(oleoyl_groups),labels),subplot=1
 )
 
 # And with Palmitoyl groups
-groups = [
+palmitoyl_groups = [
   (["C31","O32"],"CO"),
   (["C32","H2X","H2Y"],L"\textrm{CH_2}"),
   (["C33","H3X","H3Y"],L"\textrm{CH_2}"),
@@ -193,25 +193,69 @@ groups = [
   (["C315","H15X","H15Y"],L"\textrm{CH_2}"),
   (["C316","H16X","H16Y","H16Z"],L"\textrm{CH_3}")
 ]
-gcontrib = zeros(length(mddf_ethanol_POPC.d),length(groups))
-for (ig, group) in pairs(groups)
+gcontrib = zeros(length(mddf_ethanol_POPC.d),length(palmitoyl_groups))
+for (ig, group) in pairs(palmitoyl_groups)
     gcontrib[:,ig] .= movavg(contrib(solute,mddf_ethanol_POPC.solute_atom,group[1]),n=10).x
 end
-labels = [ groups[i][2] for i in 1:length(groups) ]
+labels = [ palmitoyl_groups[i][2] for i in 1:length(palmitoyl_groups) ]
 idmin = findfirst( d -> d > 1.5, mddf_ethanol_POPC.d)
 idmax = findfirst( d -> d > 3.0, mddf_ethanol_POPC.d)
 
 contourf!(
-    1:length(groups),
+    1:length(palmitoyl_groups),
     mddf_ethanol_POPC.d[idmin:idmax],
     gcontrib[idmin:idmax,:],
     color=cgrad(:tempo),linewidth=1,linecolor=:black,
     colorbar=:none,levels=10,
     xlabel="Group",ylabel=L"r/\AA",xrotation=60,
-    xticks=(1:length(groups),labels),subplot=2
+    xticks=(1:length(palmitoyl_groups),labels),subplot=2
 )
 
 annotate!( 14, 2.7, text("Oleoyl", :left, 12, plot_font), subplot=1)
 annotate!( 12, 2.7, text("Palmitoyl", :left, 12, plot_font), subplot=2)
 
-savefig("./results/map2D_aliphatic_chains.png")
+savefig("./results/map2D_ethanol_aliphatic_chains.png")
+
+# And now the same for water-POPC
+
+gcontrib = zeros(length(mddf_water_POPC.d),length(oleoyl_groups))
+for (ig, group) in pairs(groups)
+    gcontrib[:,ig] .= movavg(contrib(solute,mddf_water_POPC.solute_atom,group[1]),n=10).x
+end
+labels = [ oleoyl_groups[i][2] for i in 1:length(oleoyl_groups) ]
+idmin = findfirst( d -> d > 1.5, mddf_water_POPC.d)
+idmax = findfirst( d -> d > 3.0, mddf_water_POPC.d)
+
+plot(layout=(2,1))
+contourf!(
+    1:length(oleoyl_groups),
+    mddf_water_POPC.d[idmin:idmax],
+    gcontrib[idmin:idmax,:],
+    color=cgrad(:tempo),linewidth=1,linecolor=:black,
+    colorbar=:none,levels=10,
+    ylabel=L"r/\AA",xrotation=60,
+    xticks=(1:length(oleoyl_groups),labels),subplot=1
+)
+
+gcontrib = zeros(length(mddf_water_POPC.d),length(palmitoyl_groups))
+for (ig, group) in pairs(palmitoyl_groups)
+    gcontrib[:,ig] .= movavg(contrib(solute,mddf_water_POPC.solute_atom,group[1]),n=10).x
+end
+labels = [ palmitoyl_groups[i][2] for i in 1:length(palmitoyl_groups) ]
+idmin = findfirst( d -> d > 1.5, mddf_water_POPC.d)
+idmax = findfirst( d -> d > 3.0, mddf_water_POPC.d)
+
+contourf!(
+    1:length(palmitoyl_groups),
+    mddf_water_POPC.d[idmin:idmax],
+    gcontrib[idmin:idmax,:],
+    color=cgrad(:tempo),linewidth=1,linecolor=:black,
+    colorbar=:none,levels=10,
+    xlabel="Group",ylabel=L"r/\AA",xrotation=60,
+    xticks=(1:length(palmitoyl_groups),labels),subplot=2
+)
+
+annotate!( 14, 2.7, text("Oleoyl", :left, 12, plot_font), subplot=1)
+annotate!( 12, 2.7, text("Palmitoyl", :left, 12, plot_font), subplot=2)
+
+savefig("./results/map2D_water_aliphatic_chains.png")
