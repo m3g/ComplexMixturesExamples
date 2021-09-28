@@ -10,13 +10,9 @@ In this example we illustrate how the solvation structure of a polymer can be st
 
 ![](./results/mddf_kb.png)
 
-## Group contributions of DMF
+## Group contributions
 
-![](./results/mddf_dmf_groups.png)
-
-## Group contributions of PolyACR
-
-![](./results/mddf_acr_groups.png)
+![](./results/mddf_groups.png)
 
 ## Solvation along the polymer chain
 

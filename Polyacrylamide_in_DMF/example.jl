@@ -6,8 +6,15 @@ using EasyFit
 
 # Plot defaults
 plot_font = "Computer Modern"
-default(fontfamily=plot_font,linewidth=2, framestyle=:box, label=nothing, grid=false)
-scalefontsizes(1.3)
+default(
+    fontfamily=plot_font,
+    linewidth=2.5, 
+    framestyle=:box, 
+    label=nothing, 
+    grid=false,
+    palette=:tab10
+)
+scalefontsizes(); scalefontsizes(1.3)
 
 system = readPDB("./simulation/equilibrated.pdb")
 
@@ -44,69 +51,47 @@ savefig("./results/mddf_kb.png")
 
 # Plot DMF group contributions to the MDDF
 groups = [ 
-    (select(dmf,"name O"),"O"),
-    (select(dmf,"name HA"),"HA"),
-    (select(dmf,"name N"),"N"),
-    (select(dmf,"name CC or 
-                 name CT or 
-                 name HC1 or 
-                 name HC2 or
-                 name HC3 or
-                 name HT1 or
-                 name HT2 or
-                 name HT3"),"Methyl groups"),
+    (["O"],"O"),
+    (["HA"],"HA"),
+    (["N"],"N"),
+    (["CC","CT","HC1","HC2","HC3","HT1","HT2","HT3"],"Methyl groups")
 ]
-
+plot(layout=(2,1))
 x = mddf_dmf_acr.d
 y = movavg(mddf_dmf_acr.mddf,n=10).x
-plot(x,y,label="Total")
+plot!(x,y,label="Total",subplot=1)
 for group in groups
     group_contrib = contrib(solvent,mddf_dmf_acr.solvent_atom,group[1])
     y = movavg(group_contrib,n=10).x
-    plot!(x,y,label=group[2])
+    plot!(x,y,label=group[2],subplot=1)
 end
 plot!(
-    xlim=(1,8),
-    xlabel=L"\textrm{Distance / \AA}",
-    ylabel="MDDF"
+    xlim=(1,5),
+    ylabel="MDDF",
+    subplot=1
 )
-savefig("./results/mddf_dmf_groups.png")
 
 # Plot ACR group contributions to the MDDF
 groups = [ 
-    (select(acr,"name OE1 or name CD"),"CO"),
-    (select(acr,"name NE2 or
-                 name HE22 or
-                 name HE21"),L"\textrm{NH_2}"),
-    (select(acr,"name C or
-                 name H2 or
-                 name H1 or
-                 name CA or
-                 name HA or
-                 name CF or 
-                 name HF1 or
-                 name HF2 or
-                 name HF3 or
-                 name CL or
-                 name HL1 or
-                 name HL2 or
-                 name HL3"),L"\textrm{Aliphatic}")
+    (["OE1","CD"],"CO"),
+    (["NE2","HE22","HE21"],L"\textrm{NH_2}"),
+    (["C","H2","H1","CA","HA","CF","HF1","HF2",
+      "HF3","CL","HL1","HL2","HL3"],"Aliphatic")
 ]
-
 x = mddf_dmf_acr.d
 y = movavg(mddf_dmf_acr.mddf,n=10).x
-plot(x,y,label="Total")
+plot!(x,y,label="Total",subplot=2)
 for group in groups
     group_contrib = contrib(solute,mddf_dmf_acr.solute_atom,group[1])
     y = movavg(group_contrib,n=10).x
-    plot!(x,y,label=group[2])
+    plot!(x,y,label=group[2],subplot=2)
 end
 plot!(
-    xlim=(1,8),
+    xlim=(1,5),
     xlabel=L"\textrm{Distance / \AA}",
-    ylabel="MDDF"
+    ylabel="MDDF", subplot=2
 )
-savefig("./results/mddf_acr_groups.png")
+savefig("./results/mddf_groups.png")
 
 # 2D plot of group contributions
 mers = collect(eachresidue(acr))
