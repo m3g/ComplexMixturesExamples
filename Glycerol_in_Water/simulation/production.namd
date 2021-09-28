@@ -43,7 +43,7 @@ pairlistdist            15
 firsttimestep           0
 timestep                2
 stepspercycle           4
-nonbondedFreq           2
+nonbondedFreq           1
 fullElectFrequency      4
 
 # Periodic boundary conditions

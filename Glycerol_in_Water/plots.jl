@@ -93,6 +93,8 @@ plot!(
 savefig("./results/mddf_groups.png")
 
 # 2D plot of group contributions
+
+# Glycerol groups
 groups = [
     (["O1","HO1"],"OH"), # first hydroxyl
     (["C1","H11","H12"],L"\textrm{CH_2}"), # first CH2
@@ -101,6 +103,8 @@ groups = [
     (["C3","H31","H32"],L"\textrm{CH_2}"), # second CH2
     (["O3","HO3"],"OH") # third hydroxyl
 ] 
+
+# Contributions to Glycerol-Glycerol autocorrelation
 group_contrib = zeros(length(mddf_glyc.d),length(groups))
 for (igroup, group) in pairs(groups)
     group_contrib[:,igroup] .= contrib(solute,mddf_glyc.solute_atom,group[1])
@@ -122,6 +126,7 @@ contourf!(
     subplot=1
 )
 
+# Water-glycerol interactions (Glycerol contributions)
 group_contrib = zeros(length(mddf_glyc.d),length(groups))
 for (igroup, group) in pairs(groups)
     group_contrib[:,igroup] .= contrib(solute,mddf_water_glyc.solute_atom,group[1])
