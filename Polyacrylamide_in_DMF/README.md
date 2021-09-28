@@ -6,6 +6,8 @@ In this example we illustrate how the solvation structure of a polymer can be st
 
 <center><img height=300px src="./system.png"></center>
 
+Trajectory file: [traj_Polyacry.dcd - 275Mb](https://drive.google.com/file/d/1ug43ncCLsBATaJrT9zlbaqK6AORVvhhx/view?usp=sharing)
+
 ## Minimum-distance distribution function and KB integral
 
 ![](./results/mddf_kb.png)

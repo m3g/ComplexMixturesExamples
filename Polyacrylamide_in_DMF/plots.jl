@@ -16,23 +16,16 @@ default(
 )
 scalefontsizes(); scalefontsizes(1.3)
 
+# Load system PDB file
 system = readPDB("./simulation/equilibrated.pdb")
-
-# The results will be loaded from previous computations. The original
-# code for computing the distributions is commented.
-trajectory_file = "../trajectories/traj_Polyacry.dcd"
 
 # Select the atoms corresponding to glycerol and water
 dmf = select(system,"resname DMF")
 acr = select(system,"resname FACR or resname ACR or resname LACR")
 
-# Compute glyc-glyc auto correlation 
+# Set ComplexMixtures selections
 solute = Selection(acr,nmols=1)
 solvent = Selection(dmf,natomspermol=12)
-#traj = Trajectory(trajectory_file,solute,solvent)
-#opt = ComplexMixtures.Options(dbulk=20.)
-#mddf_dmf_acr = mddf(traj,opt)
-#save(mddf_dmf_acr,"./results/mddf_dmf_acr.json")
 
 # Load previously computed data
 mddf_dmf_acr = load("./results/mddf_dmf_acr.json")
@@ -41,7 +34,7 @@ mddf_dmf_acr = load("./results/mddf_dmf_acr.json")
 plot(layout=(2,1))
 x = mddf_dmf_acr.d
 y = movavg(mddf_dmf_acr.mddf,n=10).x
-plot!(x,y,xlabel=L"\textrm{Distance / \AA}",ylabel="MDDF",subplot=1)
+plot!(x,y,ylabel="MDDF",subplot=1)
 plot!(xlim=(0,20),subplot=1)
 
 y = movavg(mddf_dmf_acr.kb,n=10).x
@@ -51,7 +44,7 @@ savefig("./results/mddf_kb.png")
 
 # Plot DMF group contributions to the MDDF
 groups = [ 
-    (["O"],"O"),
+    (["C","O"],"CO"), # carbonyl
     (["HA"],"HA"),
     (["N"],"N"),
     (["CC","CT","HC1","HC2","HC3","HT1","HT2","HT3"],"Methyl groups")
@@ -72,11 +65,12 @@ plot!(
 )
 
 # Plot ACR group contributions to the MDDF
-groups = [ 
-    (["OE1","CD"],"CO"),
-    (["NE2","HE22","HE21"],L"\textrm{NH_2}"),
-    (["C","H2","H1","CA","HA","CF","HF1","HF2",
-      "HF3","CL","HL1","HL2","HL3"],"Aliphatic")
+groups = [
+    (["CF","HF1","HF2","HF3",
+      "CL","HL1","HL2","HL3"],L"\textrm{CH_3}"), # terminal methyles
+    (["OE1","CD"],"CO"), # carbonyl
+    (["NE2","HE22","HE21"],L"\textrm{NH_2}"), # amine
+    (["C","H2","H1","CA","HA"],L"\textrm{CHCH_2}"), # backbone
 ]
 x = mddf_dmf_acr.d
 y = movavg(mddf_dmf_acr.mddf,n=10).x
@@ -94,24 +88,57 @@ plot!(
 savefig("./results/mddf_groups.png")
 
 # 2D plot of group contributions
+groups = [
+    (["CF","HF1","HF2","HF3"],L"\textrm{CH_3}"),
+    (["OE1","CD"],"CO"),
+    (["NE2","HE22","HE21"],L"\textrm{NH_2}"),
+    (["C","H2","H1","CA","HA"],L"\textrm{CHCH_2}"),
+    (["CL","HL1","HL2","HL3"],L"\textrm{CH_3}")
+]
+
 mers = collect(eachresidue(acr))
-mer_contrib = zeros(length(mddf_dmf_acr.d),length(mers))
+group_contribs = zeros(length(mddf_dmf_acr.d),0)
+labels = String[]
 for (imer, mer) in pairs(mers)
-    mer_contrib[:,imer] .= movavg(contrib(solute,mddf_dmf_acr.solute_atom,mer),n=10).x
+    mer_atoms = mer.atoms[mer.range]
+    for igroup in 1:length(groups)
+        group = groups[igroup]
+        (imer != 1 && igroup == 1) && continue
+        (imer != 5 && igroup == 5) && continue
+        atoms = filter(at -> at.name in group[1], mer_atoms)
+        contribs = movavg(contrib(solute,mddf_dmf_acr.solute_atom,atoms),n=10).x
+        group_contribs = hcat(group_contribs,contribs)
+        push!(labels,group[2])
+    end
 end
+
 idmin = findfirst( d -> d > 1.5, mddf_dmf_acr.d)
-idmax = findfirst( d -> d > 3.5, mddf_dmf_acr.d)
-labels = [ "$i" for i in 1:length(mers) ]
+idmax = findfirst( d -> d > 3.2, mddf_dmf_acr.d)
 contourf(
-    1:length(mers),
+    1:length(labels),
     mddf_dmf_acr.d[idmin:idmax],
-    mer_contrib[idmin:idmax,:],
+    group_contribs[idmin:idmax,:],
     color=cgrad(:tempo),linewidth=1,linecolor=:black,
-    colorbar=:none,levels=5,
-    xlabel="mer",ylabel=L"r/\AA",
-    xticks=(1:length(mers),labels),
+    colorbar=:none,levels=10,
+    xlabel="Group",ylabel=L"r/\AA",xrotation=60,
+    xticks=(1:length(labels),labels),
+    margin=5Plots.Measures.mm
 )
 savefig("./results/map2D_acr.png")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
