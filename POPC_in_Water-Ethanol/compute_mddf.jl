@@ -1,7 +1,7 @@
 using ComplexMixtures
 using PDBTools
 
-# Load pdb file of the sytem
+# Load pdb file of the system
 system = readPDB("./simulation/equilibrated.pdb")
 
 # The trajectory file can be downloaded from:

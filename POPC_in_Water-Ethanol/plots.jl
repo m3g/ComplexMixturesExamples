@@ -16,7 +16,7 @@ default(
 )
 scalefontsizes(); scalefontsizes(1.3)
 
-# Load pdb file of the sytem
+# Load pdb file of the system
 system = readPDB("./simulation/equilibrated.pdb")
 
 # Select the atoms corresponding to glycerol and water
@@ -35,9 +35,10 @@ mddf_ethanol_POPC = load("./results/mddf_ethanol_POPC.json")
 # of ethanol to the MDDF
 solvent = Selection(ethanol,natomspermol=9)
 
-# Water-POPC MDDF and KB integral
+# Water-POPC MDDF and KB integral. Here we use `movavg` from `EasyFit` to soften
+# the noise
 plot(layout=(2,1))
-x = mddf_water_POPC.d
+x = mddf_water_POPC.d # distances
 y = movavg(mddf_water_POPC.mddf,n=10).x
 plot!(x,y,label="Water",
     xlabel=L"\textrm{Distance / \AA}",
@@ -83,7 +84,9 @@ plot!(
 )
 savefig("./results/mddf_ethanol_groups.png")
 
-# Contributions of POPC groups to ethanol-POPC distribution
+# Contributions of POPC groups to ethanol-POPC distribution. Bellow is the list
+# of the atom types of each POPC group. We need to list those to select specifically
+# the atoms of each chemical group of interest. 
 groups = [
   (["N","C12","H12A","H12B","C13","H13A","H13B","H13C","C14",
     "H14A","H14B","H14C","C15","H15A","H15B","H15C","C11","H11A","H11B"],"Choline"),
@@ -104,6 +107,7 @@ x = mddf_ethanol_POPC.d
 y = movavg(mddf_ethanol_POPC.mddf,n=10).x
 plot(x,y,label="Total")
 for group in groups
+    # Retrieve the contributions of the atoms of this group
     group_contrib = contrib(solute,mddf_ethanol_POPC.solute_atom,group[1])
     y = movavg(group_contrib,n=10).x
     plot!(x,y,label=group[2])
@@ -133,7 +137,8 @@ plot!(
 )
 savefig("./results/mddf_popc_water_groups.png")
 
-# Map of interactions of ethanol with Oleoyl groups
+# Map of interactions of ethanol with Oleoyl groups. Now we split the
+# Oleoyl chain into its components, ordered along the chain. 
 oleoyl_groups = [
   (["O22","C21"],"CO"),
   (["H2R","H2S","C22"],L"\textrm{CH_2}"),
@@ -201,6 +206,7 @@ labels = [ palmitoyl_groups[i][2] for i in 1:length(palmitoyl_groups) ]
 idmin = findfirst( d -> d > 1.5, mddf_ethanol_POPC.d)
 idmax = findfirst( d -> d > 3.0, mddf_ethanol_POPC.d)
 
+# This creates a contour plot, with some options to make the plot look nicer.
 contourf!(
     1:length(palmitoyl_groups),
     mddf_ethanol_POPC.d[idmin:idmax],
