@@ -18,7 +18,7 @@ The first and most simple analysis is the computation of the minimum-distance di
 
 ![](./results/mddf_kb.png)
 
-Both water and glycerol form hydrogen bonds with (other) glycerol molecules, as indicated by the peaks at ~1.8Angstroms. The auto-correlation function of glycerol shows a more marked second peak corresponding to non-specific interactions, which (as we wil show) are likely associated to interactions of its aliphatic groups. 
+Both water and glycerol form hydrogen bonds with (other) glycerol molecules, as indicated by the peaks at ~1.8Angstroms. The auto-correlation function of glycerol shows a more marked second peak corresponding to non-specific interactions, which (as we will show) are likely associated to interactions of its aliphatic groups. 
 
 The KB integrals in the second pannel show similar values water and glycerol, with the KB integral for water being slightly greater. This means that glycerol molecules are (sightly, if the result is considered reliable) preferentially hydrated from a macroscopic standpoint. 
 
