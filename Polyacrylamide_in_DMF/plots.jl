@@ -42,7 +42,9 @@ plot!(x,y,xlabel=L"\textrm{Distance / \AA}",ylabel=L"\textrm{KB~/~cm^3~mol^{-1}}
 plot!(xlim=(0,20),subplot=2)
 savefig("./results/mddf_kb.png")
 
-# Plot DMF group contributions to the MDDF
+# Plot DMF group contributions to the MDDF. We use a vector of tuples here, 
+# the first element of the tuple is a list of atom names, and the second element
+# is the label of the group, to be used in the plot. 
 groups = [ 
     (["C","O"],"CO"), # carbonyl
     (["HA"],"HA"),
@@ -54,6 +56,7 @@ x = mddf_dmf_acr.d
 y = movavg(mddf_dmf_acr.mddf,n=10).x
 plot!(x,y,label="Total",subplot=1)
 for group in groups
+    # Retrieve the contributions of the atoms of this group
     group_contrib = contrib(solvent,mddf_dmf_acr.solvent_atom,group[1])
     y = movavg(group_contrib,n=10).x
     plot!(x,y,label=group[2],subplot=1)
@@ -96,24 +99,36 @@ groups = [
     (["CL","HL1","HL2","HL3"],L"\textrm{CH_3}")
 ]
 
+# Here we split the polymer in residues, to extract the contribution of 
+# each chemical group of each polymer mer independently
 mers = collect(eachresidue(acr))
 group_contribs = zeros(length(mddf_dmf_acr.d),0)
 labels = String[]
 for (imer, mer) in pairs(mers)
-    mer_atoms = mer.atoms[mer.range]
+    # The mer.atoms array is just the original array of atoms,
+    # and the atoms of this residue are retrieved by choosing the 
+    # corresponding range (the eachresidue function does not copy)
+    mer_atoms = mer.atoms[mer.range] 
     for igroup in 1:length(groups)
         group = groups[igroup]
-        (imer != 1 && igroup == 1) && continue
-        (imer != 5 && igroup == 5) && continue
+        (imer != 1 && igroup == 1) && continue # only first residue has a first CH3
+        (imer != 5 && igroup == 5) && continue # only last residue has a terminal CH3
+        # And from the mer_atoms atoms, filter the ones corresponding to this group
         atoms = filter(at -> at.name in group[1], mer_atoms)
+        # Retrive the contribution of these atoms to the MDDF
         contribs = movavg(contrib(solute,mddf_dmf_acr.solute_atom,atoms),n=10).x
+        # Concatenate the results to build the 2D matrix
         group_contribs = hcat(group_contribs,contribs)
+        # Push label to label list
         push!(labels,group[2])
     end
 end
 
+# Find the indices of the limits of the map we want
 idmin = findfirst( d -> d > 1.5, mddf_dmf_acr.d)
 idmax = findfirst( d -> d > 3.2, mddf_dmf_acr.d)
+
+# Plot contour map
 contourf(
     1:length(labels),
     mddf_dmf_acr.d[idmin:idmax],
@@ -122,28 +137,7 @@ contourf(
     colorbar=:none,levels=10,
     xlabel="Group",ylabel=L"r/\AA",xrotation=60,
     xticks=(1:length(labels),labels),
-    margin=5Plots.Measures.mm
+    margin=5Plots.Measures.mm # adjust margin 
 )
 savefig("./results/map2D_acr.png")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
