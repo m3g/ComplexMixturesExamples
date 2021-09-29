@@ -15,6 +15,9 @@ water = select(system,"water")
 # Compute Glycerol-Glycerol auto correlation mddf 
 solute = Selection(glyc,natomspermol=14)
 traj = Trajectory(trajectory_file,solute) # solute and solvent are the same
+
+# We define a large solute domain (large dbulk) to obtain a good convergence
+# for the KB integral. The mddf converges at much shorter distances.   
 opt = ComplexMixtures.Options(dbulk=20.)
 mddf_glyc = mddf(traj,opt)
 

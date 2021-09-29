@@ -30,10 +30,10 @@ solute = Selection(glyc,natomspermol=14)
 mddf_glyc = load("./results/mddf_glyc.json")
 mddf_water_glyc = load("./results/mddf_water_glyc.json")
 
-# Plot the correlation functions and KB integrals
+# Plot the correlation functions
 plot(layout=(2,1))
-x = mddf_glyc.d
-y = movavg(mddf_glyc.mddf,n=10).x
+x = mddf_glyc.d # distances
+y = movavg(mddf_glyc.mddf,n=10).x # the mddf (using movavg to smooth noise)
 plot!(x,y,label="Glycerol")
 x = mddf_water_glyc.d
 y = movavg(mddf_water_glyc.mddf,n=10).x
@@ -43,6 +43,7 @@ plot!(
     xlim=(1.5,8),subplot=1
 )
 
+# Plot the KB integrals
 y = movavg(mddf_glyc.kb,n=10).x
 plot!(x,y,subplot=2)
 y = movavg(mddf_water_glyc.kb,n=10).x
@@ -53,13 +54,16 @@ plot!(
 )
 savefig("./results/mddf_kb.png")
 
-# Plot some group contributions to the MDDF
+# Plot some group contributions to the MDDF. We select the atom names
+# corresponding to each type of group of the glycerol molecule.  
 hydroxyls = ["O1","O2","O3","HO1","HO2","HO3"]
 aliphatic = ["C1","C2","C3","H11","H12","H2","H31","H32"]
 
+# Retrieve the contributions of these groups to the MDDFs
 hydroxyl_contrib = contrib(solute,mddf_glyc.solvent_atom,hydroxyls)
 aliphatic_contrib = contrib(solute,mddf_glyc.solvent_atom,aliphatic)
 
+# Plot group contributions
 plot(layout=(2,1))
 x = mddf_glyc.d
 y = movavg(mddf_glyc.mddf,n=10).x
@@ -92,7 +96,7 @@ plot!(
 )
 savefig("./results/mddf_groups.png")
 
-# 2D plot of group contributions
+# 2D maps plot of group contributions
 
 # Glycerol groups
 groups = [
