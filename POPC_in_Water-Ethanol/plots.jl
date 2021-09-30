@@ -4,6 +4,8 @@ using Plots
 using LaTeXStrings
 using EasyFit
 
+function fig() # to simplify globals
+
 # Plot defaults
 plot_font = "Computer Modern"
 default(
@@ -162,7 +164,6 @@ oleoyl_groups = [
 
 gcontrib = zeros(length(mddf_ethanol_POPC.d),length(oleoyl_groups))
 for (ig, group) in pairs(oleoyl_groups)
-    @show ig, group, group[1]
     gcontrib[:,ig] .= movavg(contrib(solute,mddf_ethanol_POPC.solute_atom,group[1]),n=10).x
 end
 labels = [ oleoyl_groups[i][2] for i in 1:length(oleoyl_groups) ]
@@ -263,3 +264,5 @@ annotate!( 14, 2.7, text("Oleoyl", :left, 12, plot_font), subplot=1)
 annotate!( 12, 2.7, text("Palmitoyl", :left, 12, plot_font), subplot=2)
 
 savefig("./results/map2D_water_aliphatic_chains.png")
+
+end; fig()
