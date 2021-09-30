@@ -216,8 +216,8 @@ contourf!(
     xticks=(1:length(palmitoyl_groups),labels),subplot=7
 )
 
-annotate!( 14, 2.7, text("Oleoyl", :left, 12, plot_font), subplot=6)
-annotate!( 12, 2.7, text("Palmitoyl", :left, 12, plot_font), subplot=7)
+annotate!( 10, 2.7, text("Ethanol-Oleoyl", :left, 12, plot_font), subplot=6)
+annotate!(  8, 2.7, text("Ethanol-Palmitoyl", :left, 12, plot_font), subplot=7)
 
 # And now the same for water-POPC
 
@@ -257,23 +257,20 @@ contourf!(
     xticks=(1:length(palmitoyl_groups),labels),subplot=9
 )
 
-annotate!( 14, 2.7, text("Oleoyl", :left, 12, plot_font), subplot=8)
-annotate!( 12, 2.7, text("Palmitoyl", :left, 12, plot_font), subplot=9)
+annotate!( 10, 2.7, text("Water-Oleoyl", :left, 12, plot_font), subplot=8)
+annotate!(  8, 2.7, text("Water-Palmitoyl", :left, 12, plot_font), subplot=9)
 
-plot!(
-    leftmargin=5Plots.Measures.mm,
-    size=(1000,800)
-)
-
-for (y,lab) in [(8.2,"A)"),
-                (7.1,"B)"),
-                (5.4,"C)"),
-                (4.4,"D)"),
-                (2.4,"E)")]
+for (c,lab) in [((-21.8, 16.4),"A)"),
+                ((-21.8, 14.1),"B)"),
+                (( -2.4, 15.2),"C)"),
+                ((-21.8,  9.4),"D)"),
+                (( -2.4,  9.4),"E)"),
+                ((-21.8,  6.0),"F)"),
+                (( -2.4,  6.0),"G)")]
     annotate!(
-        -2.3, y,
+        c[1],c[2],
         text(lab,plot_font,12),
-        subplot=5,
+        subplot=9,
     )
 end
 
@@ -281,6 +278,21 @@ annotate!(
     5,2,
     text("Ethanol contributions",plot_font,10),
     subplot=3
+)
+annotate!(
+    3.8,0.3,
+    text("PolyACR contributions\nto Ethanol MDDF",plot_font,10),
+    subplot=4
+)
+annotate!(
+    3.8,0.4,
+    text("PolyACR contributions\nto Water MDDF",plot_font,10),
+    subplot=5
+)
+
+plot!(
+    leftmargin=10Plots.Measures.mm,
+    size=(1000,800)
 )
 
 savefig("./popc.png")
