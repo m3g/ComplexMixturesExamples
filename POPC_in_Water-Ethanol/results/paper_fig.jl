@@ -14,10 +14,11 @@ default(
     grid=false,
     palette=:tab10
 )
-scalefontsizes(); scalefontsizes(1.3)
+scalefontsizes()
+#scalefontsizes(1.3)
 
 # Load pdb file of the system
-system = readPDB("./simulation/equilibrated.pdb")
+system = readPDB("../simulation/equilibrated.pdb")
 
 # Select the atoms corresponding to glycerol and water
 popc = select(system,"resname POPC")
@@ -28,23 +29,26 @@ ethanol = select(system,"resname ETOH")
 solute = Selection(popc,nmols=1)
 
 # Load previously computed data
-mddf_water_POPC = load("./results/mddf_water_POPC.json")
-mddf_ethanol_POPC = load("./results/mddf_ethanol_POPC.json")
+mddf_water_POPC = load("./mddf_water_POPC.json")
+mddf_ethanol_POPC = load("./mddf_ethanol_POPC.json")
 
 # Set a solvent structure, uses to retrieve the atomic Contributions
 # of ethanol to the MDDF
 solvent = Selection(ethanol,natomspermol=9)
 
+l = @layout [ grid(2,1)  b{0.3w} ; 
+              c          d{0.5w} ;
+              grid(2,1) grid(2,1) ]
+plot(layout=l)
+
 # Water-POPC MDDF and KB integral. Here we use `movavg` from `EasyFit` to soften
 # the noise
-plot(layout=(2,1))
 x = mddf_water_POPC.d # distances
 y = movavg(mddf_water_POPC.mddf,n=10).x
 plot!(x,y,label="Water",
-    xlabel=L"\textrm{Distance / \AA}",
+    #xlabel=L"\textrm{Distance / \AA}",
     ylabel="MDDF",subplot=1
 )
-plot!(xlim=(0,10),subplot=1)
 
 y = movavg(mddf_water_POPC.kb,n=10).x/1000
 plot!(x,y,xlabel=L"\textrm{Distance / \AA}",ylabel=L"\textrm{KB~/~L~mol^{-1}}",subplot=2)
@@ -53,16 +57,12 @@ plot!(xlim=(0,10),subplot=2)
 # Ethanol-POPC MDDF and KB integral
 x = mddf_ethanol_POPC.d
 y = movavg(mddf_ethanol_POPC.mddf,n=10).x
-plot!(x,y,label="Ethanol",
-    xlabel=L"\textrm{Distance / \AA}",ylabel="MDDF",subplot=1
-)
-plot!(xlim=(0,10),subplot=1)
+plot!(x,y,label="Ethanol")
+plot!(xlim=(0,10),xticks=:none,subplot=1)
 
 y = movavg(mddf_ethanol_POPC.kb,n=10).x/1000
 plot!(x,y,xlabel=L"\textrm{Distance / \AA}",ylabel=L"\textrm{KB~/~L~mol^{-1}}",subplot=2)
 plot!(xlim=(0,10),subplot=2)
-
-savefig("./results/mddf_kb.png")
 
 # Contributions of the ethanol groups
 groups = [
@@ -71,18 +71,17 @@ groups = [
 ]
 x = mddf_ethanol_POPC.d
 y = movavg(mddf_ethanol_POPC.mddf,n=10).x
-plot(x,y,label="Total")
+plot!(x,y,label="Total",subplot=3)
 for group in groups
     group_contrib = contrib(solvent,mddf_ethanol_POPC.solvent_atom,group[1])
     y = movavg(group_contrib,n=10).x
-    plot!(x,y,label=group[2])
+    plot!(x,y,label=group[2],subplot=3)
 end
 plot!(
     xlim=(1,8),
     xlabel=L"\textrm{Distance / \AA}",
-    ylabel="MDDF"
+    ylabel="MDDF", subplot=3
 )
-savefig("./results/mddf_ethanol_groups.png")
 
 # Contributions of POPC groups to ethanol-POPC distribution. Bellow is the list
 # of the atom types of each POPC group. We need to list those to select specifically
@@ -105,37 +104,37 @@ groups = [
 ]
 x = mddf_ethanol_POPC.d
 y = movavg(mddf_ethanol_POPC.mddf,n=10).x
-plot(x,y,label="Total")
+plot!(x,y,label="Total",subplot=4)
 for group in groups
     # Retrieve the contributions of the atoms of this group
     group_contrib = contrib(solute,mddf_ethanol_POPC.solute_atom,group[1])
     y = movavg(group_contrib,n=10).x
-    plot!(x,y,label=group[2])
+    plot!(x,y,label=group[2],subplot=4)
 end
 plot!(
     xlim=(1.3,5),
     ylim=(0,1.8),
     xlabel=L"\textrm{Distance / \AA}",
-    ylabel="MDDF"
+    ylabel="MDDF",
+    subplot=4
 )
-savefig("./results/mddf_popc_ethanol_groups.png")
 
 # the same for POPC-water
 x = mddf_water_POPC.d
 y = movavg(mddf_water_POPC.mddf,n=10).x
-plot(x,y,label="Total")
+plot!(x,y,label="Total",subplot=5)
 for group in groups
     group_contrib = contrib(solute,mddf_water_POPC.solute_atom,group[1])
     y = movavg(group_contrib,n=10).x
-    plot!(x,y,label=group[2])
+    plot!(x,y,label=group[2],subplot=5)
 end
 plot!(
     xlim=(1.3,5),
     ylim=(0,1.8),
     xlabel=L"\textrm{Distance / \AA}",
-    ylabel="MDDF"
+    ylabel="MDDF",
+    subplot=5
 )
-savefig("./results/mddf_popc_water_groups.png")
 
 # Map of interactions of ethanol with Oleoyl groups. Now we split the
 # Oleoyl chain into its components, ordered along the chain. 
@@ -162,22 +161,21 @@ oleoyl_groups = [
 
 gcontrib = zeros(length(mddf_ethanol_POPC.d),length(oleoyl_groups))
 for (ig, group) in pairs(oleoyl_groups)
-    @show ig, group, group[1]
     gcontrib[:,ig] .= movavg(contrib(solute,mddf_ethanol_POPC.solute_atom,group[1]),n=10).x
 end
 labels = [ oleoyl_groups[i][2] for i in 1:length(oleoyl_groups) ]
 idmin = findfirst( d -> d > 1.5, mddf_ethanol_POPC.d)
 idmax = findfirst( d -> d > 3.0, mddf_ethanol_POPC.d)
 
-plot(layout=(2,1))
 contourf!(
     1:length(oleoyl_groups),
     mddf_ethanol_POPC.d[idmin:idmax],
     gcontrib[idmin:idmax,:],
     color=cgrad(:tempo),linewidth=1,linecolor=:black,
     colorbar=:none,levels=10,
-    ylabel=L"r/\AA",xrotation=60,
-    xticks=(1:length(oleoyl_groups),labels),subplot=1,
+    ylabel=L"\textrm{Distance/\AA}",xrotation=60,
+    xticks=(1:length(oleoyl_groups),labels),
+    subplot=6
 )
 
 # And with Palmitoyl groups
@@ -204,6 +202,8 @@ for (ig, group) in pairs(palmitoyl_groups)
     gcontrib[:,ig] .= movavg(contrib(solute,mddf_ethanol_POPC.solute_atom,group[1]),n=10).x
 end
 labels = [ palmitoyl_groups[i][2] for i in 1:length(palmitoyl_groups) ]
+idmin = findfirst( d -> d > 1.5, mddf_ethanol_POPC.d)
+idmax = findfirst( d -> d > 3.0, mddf_ethanol_POPC.d)
 
 # This creates a contour plot, with some options to make the plot look nicer.
 contourf!(
@@ -212,16 +212,15 @@ contourf!(
     gcontrib[idmin:idmax,:],
     color=cgrad(:tempo),linewidth=1,linecolor=:black,
     colorbar=:none,levels=10,
-    xlabel="Group",ylabel=L"r/\AA",xrotation=60,
-    xticks=(1:length(palmitoyl_groups),labels),subplot=2,
+    xlabel="Group",ylabel=L"\textrm{Distance/\AA}",xrotation=60,
+    xticks=(1:length(palmitoyl_groups),labels),subplot=7
 )
 
-annotate!( 14, 2.7, text("Oleoyl", :left, 12, plot_font), subplot=1)
-annotate!( 12, 2.7, text("Palmitoyl", :left, 12, plot_font), subplot=2)
-
-savefig("./results/map2D_ethanol_aliphatic_chains.png")
+annotate!( 14, 2.7, text("Oleoyl", :left, 12, plot_font), subplot=6)
+annotate!( 12, 2.7, text("Palmitoyl", :left, 12, plot_font), subplot=7)
 
 # And now the same for water-POPC
+
 gcontrib = zeros(length(mddf_water_POPC.d),length(oleoyl_groups))
 for (ig, group) in pairs(oleoyl_groups)
     gcontrib[:,ig] .= movavg(contrib(solute,mddf_water_POPC.solute_atom,group[1]),n=10).x
@@ -230,15 +229,14 @@ labels = [ oleoyl_groups[i][2] for i in 1:length(oleoyl_groups) ]
 idmin = findfirst( d -> d > 1.5, mddf_water_POPC.d)
 idmax = findfirst( d -> d > 3.0, mddf_water_POPC.d)
 
-plot(layout=(2,1))
 contourf!(
     1:length(oleoyl_groups),
     mddf_water_POPC.d[idmin:idmax],
     gcontrib[idmin:idmax,:],
     color=cgrad(:tempo),linewidth=1,linecolor=:black,
     colorbar=:none,levels=10,
-    ylabel=L"r/\AA",xrotation=60,
-    xticks=(1:length(oleoyl_groups),labels),subplot=1
+    ylabel=L"\textrm{Distance/\AA}",xrotation=60,
+    xticks=(1:length(oleoyl_groups),labels),subplot=8
 )
 
 gcontrib = zeros(length(mddf_water_POPC.d),length(palmitoyl_groups))
@@ -255,11 +253,34 @@ contourf!(
     gcontrib[idmin:idmax,:],
     color=cgrad(:tempo),linewidth=1,linecolor=:black,
     colorbar=:none,levels=10,
-    xlabel="Group",ylabel=L"r/\AA",xrotation=60,
-    xticks=(1:length(palmitoyl_groups),labels),subplot=2
+    xlabel="Group",ylabel=L"\textrm{Distance/\AA}",xrotation=60,
+    xticks=(1:length(palmitoyl_groups),labels),subplot=9
 )
 
-annotate!( 14, 2.7, text("Oleoyl", :left, 12, plot_font), subplot=1)
-annotate!( 12, 2.7, text("Palmitoyl", :left, 12, plot_font), subplot=2)
+annotate!( 14, 2.7, text("Oleoyl", :left, 12, plot_font), subplot=8)
+annotate!( 12, 2.7, text("Palmitoyl", :left, 12, plot_font), subplot=9)
 
-savefig("./results/map2D_water_aliphatic_chains.png")
+plot!(
+    leftmargin=5Plots.Measures.mm,
+    size=(1000,800)
+)
+
+for (y,lab) in [(8.2,"A)"),
+                (7.1,"B)"),
+                (5.4,"C)"),
+                (4.4,"D)"),
+                (2.4,"E)")]
+    annotate!(
+        -2.3, y,
+        text(lab,plot_font,12),
+        subplot=5,
+    )
+end
+
+annotate!(
+    5,2,
+    text("Ethanol contributions",plot_font,10),
+    subplot=3
+)
+
+savefig("./popc.png")
