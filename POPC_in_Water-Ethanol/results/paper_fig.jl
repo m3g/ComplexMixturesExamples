@@ -4,6 +4,8 @@ using Plots
 using LaTeXStrings
 using EasyFit
 
+function fig() # to take care of globals only
+
 # Plot defaults
 plot_font = "Computer Modern"
 default(
@@ -296,3 +298,5 @@ plot!(
 )
 
 savefig("./popc.png")
+
+end; fig()
