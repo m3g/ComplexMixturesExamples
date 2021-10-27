@@ -185,6 +185,7 @@ plot!(p,
 )
 
 savefig(p,"./glyc_water.png")
+savefig(p,"./figure3.pdf")
 
 return p
 end; 

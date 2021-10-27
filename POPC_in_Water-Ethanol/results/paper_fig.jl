@@ -298,5 +298,6 @@ plot!(
 )
 
 savefig("./popc.png")
+savefig("./figure7.pdf")
 
 end; fig()

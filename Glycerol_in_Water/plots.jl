@@ -153,5 +153,6 @@ plot!(
 )
 
 savefig("./results/map2D_glyc_glyc.png")
+savefig("./results/figure3.pdf")
 
 end; fig()

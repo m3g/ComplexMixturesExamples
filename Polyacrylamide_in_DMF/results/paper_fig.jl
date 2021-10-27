@@ -5,6 +5,8 @@ using LaTeXStrings
 using EasyFit
 
 # Plot defaults
+function fig()
+
 plot_font = "Computer Modern"
 default(
     fontfamily=plot_font,
@@ -163,4 +165,7 @@ plot!(
 )
 
 savefig("./polyacr.png")
+savefig("./figure5.pdf")
+
+end; fig()
 
