@@ -1,5 +1,6 @@
 [deps]
 ComplexMixtures = "6f35c628-ac57-5bae-8ea9-703a8964f6e9"
+EasyFit = "fde71243-0cda-4261-b7c7-4845bd106b21"
 Formatting = "59287772-0a20-5a39-b81b-1366585eb4c0"
 LaTeXStrings = "b964fa9f-0449-5b57-a5c2-d3ea65f4040f"
 PDBTools = "e29189f1-7114-4dbd-93d0-c5673a921a58"
