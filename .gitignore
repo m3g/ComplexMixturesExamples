@@ -28,7 +28,7 @@ Manifest.toml
 *tmp_files*
 *BAK
 FFTW*
-trajectories/traj_Glyc.dcd
-trajectories/traj_Polyacry.dcd
-trajectories/traj_POPC.dcd
-Glycerol_in_Water/simulation/traj_Glyc.dcd
+Test/trajectories/glyc50_complete.dcd
+Test/trajectories/traj_Glyc.dcd
+Test/trajectories/traj_Polyacry.dcd
+Test/trajectories/traj_POPC.dcd

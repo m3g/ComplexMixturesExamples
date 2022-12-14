@@ -3,8 +3,9 @@ using PDBTools
 using Plots
 using LaTeXStrings
 using EasyFit
+script_dir = @__DIR__
 
-function fig() # to avoid globals
+function fig() # to edit/update easily using Revise.jl
 
 # Plot defaults
 plot_font = "Computer Modern"
@@ -19,7 +20,7 @@ default(
 scalefontsizes(); scalefontsizes(1.3)
 
 # Load system PDB file
-system = readPDB("./simulation/equilibrated.pdb")
+system = readPDB("$script_dir/simulation/equilibrated.pdb")
 
 # Select the atoms corresponding to glycerol and water
 glyc = select(system,"resname GLLM")
@@ -29,8 +30,8 @@ water = select(system,"water")
 solute = Selection(glyc,natomspermol=14)
 
 # Load previously computed data
-mddf_glyc = load("./results/mddf_glyc.json")
-mddf_water_glyc = load("./results/mddf_water_glyc.json")
+mddf_glyc = load("$script_dir/results/mddf_glyc.json")
+mddf_water_glyc = load("$script_dir/results/mddf_water_glyc.json")
 
 # Plot the correlation functions
 plot(layout=(2,1))
@@ -54,7 +55,7 @@ plot!(
     xlabel=L"\textrm{Distance / \AA}",ylabel=L"\textrm{KB~/~cm^3~mol^{-1}}",
     xlim=(0,20),subplot=2
 )
-savefig("./results/mddf_kb.png")
+savefig("$script_dir/results/mddf_kb.png")
 
 # Plot some group contributions to the MDDF. We select the atom names
 # corresponding to each type of group of the glycerol molecule.  
@@ -96,7 +97,7 @@ plot!(
     ylabel="MDDF",
     subplot=2
 )
-savefig("./results/mddf_groups.png")
+savefig("$script_dir/results/mddf_groups.png")
 
 # 2D maps plot of group contributions
 
@@ -152,7 +153,7 @@ plot!(
     subplot=2
 )
 
-savefig("./results/map2D_glyc_glyc.png")
-savefig("./results/figure3.pdf")
+savefig("$script_dir/results/map2D_glyc_glyc.png")
+savefig("$script_dir/results/figure3.pdf")
 
 end; fig()
