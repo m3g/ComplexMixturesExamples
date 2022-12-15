@@ -46,6 +46,7 @@ hline!([1], linestyle=:dash, linecolor=:gray, subplot=1)
 plot!(results.d, results.kb / 1000, #to L/mol
     xlabel=L"r/\AA", ylabel=L"G_{us}/\mathrm{L~mol^{-1}}", subplot=2)
 plot!(size=(800, 300), margin=4mm)
+savefig("$script_dir/mddf.png")
 savefig("$script_dir/mddf.pdf")
 
 # Atomic contributions to the MDDF
@@ -58,4 +59,5 @@ plot(results.d, results.mddf, xlabel=L"r/\AA", ylabel="mddf", size=(600, 400))
 plot!(results.d, hydr_contrib, label="Hydroxyls")
 plot!(results.d, aliph_contrib, label="Aliphatic chain")
 hline!([1], linestyle=:dash, linecolor=:gray)
+savefig("$script_dir/mddf_atom_contrib.png")
 savefig("$script_dir/mddf_atom_contrib.pdf")

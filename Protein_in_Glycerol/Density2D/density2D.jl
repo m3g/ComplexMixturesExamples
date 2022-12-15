@@ -45,6 +45,7 @@ contourf(irange, R.d[idmin:idmax], rescontrib[idmin:idmax, irange],
   xtickfont=font(6, plot_font),
   size=(500, 280))
 
+savefig("$script_dir/density2D.png")
 savefig("$script_dir/density2D.pdf")
 
 
