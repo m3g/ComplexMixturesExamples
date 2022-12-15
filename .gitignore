@@ -28,9 +28,16 @@ docs/site/
 *tmp_files*
 *BAK
 FFTW*
+<<<<<<< HEAD
 
 # Complete trajectory files
 glyc50_complete.dcd
 traj_Glyc.dcd
 traj_Polyacry.dcd
 traj_POPC.dcd
+=======
+test/trajectories/glyc50_complete.dcd
+test/trajectories/traj_Glyc.dcd
+test/trajectories/traj_Polyacry.dcd
+test/trajectories/traj_POPC.dcd
+>>>>>>> 7e8369c (update ignore trajs)
