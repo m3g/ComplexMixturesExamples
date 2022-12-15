@@ -44,7 +44,6 @@ end
 # Compute water-POPC distribution and KB integral 
 solvent = Selection(ethanol,natomspermol=9)
 traj = Trajectory(trajectory_file,solute,solvent)
-opt = ComplexMixtures.Options(dbulk=20.)
 mddf_ethanol_POPC = mddf(traj,opt)
 
 # Save results for later use
