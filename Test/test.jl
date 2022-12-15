@@ -16,7 +16,9 @@ found_all_downloads = isfile("$test_dir/../Test/trajectories/traj_Polyacry.dcd")
 found_all_downloads = isfile("$test_dir/../Test/trajectories/glyc50.dcd")
 
 if !found_all_downloads
-    error("""
+    println("""
+
+    WARNING: Will run tests without recomputing the data: only test trajectory files were found for all or some examples.
 
     Missing full trajectory files at $test_dir/trajectories
     
