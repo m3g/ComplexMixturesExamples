@@ -38,12 +38,14 @@ idmax = findfirst(d -> d > 3.5, R.d)
 labels = PDBTools.oneletter.(resname.(residues)) .* format.(resnum.(residues))
 
 contourf(irange, R.d[idmin:idmax], rescontrib[idmin:idmax, irange],
-  color=cgrad(:tempo), linewidth=0.1, linecolor=:black,
+  color=cgrad(:tempo), linewidth=1, linecolor=:black,
   colorbar=:none, levels=5,
   xlabel="Residue", ylabel=L"r/\AA",
   xticks=(irange, labels[irange]), xrotation=60,
-  xtickfont=font(6, plot_font),
-  size=(500, 280))
+  xtickfont=font(8, plot_font),
+  size=(700, 400),
+  margin=0.5Plots.PlotMeasures.cm
+)
 
 savefig("$script_dir/density2D.png")
 savefig("$script_dir/density2D.pdf")
