@@ -4,16 +4,16 @@ script_dir = @__DIR__
 
 # The complete trajectory file can be downloaded from: 
 # https://drive.google.com/file/d/1BuXJ8AjBeduMSD2CkDJLDNxAAD2QNNg6/view?usp=sharing
-full_traj = isfile("../Test/trajectories/traj_Glyc.dcd")
+full_traj = isfile("$script_dir/../Test/trajectories/traj_Glyc.dcd")
 if full_traj
-    trajectory_file = "../Test/trajectories/traj_Glyc.dcd"
+    trajectory_file = "$script_dir/../Test/trajectories/traj_Glyc.dcd"
 else
     println("WARNING: will execute calculations with a small trajectory sample.")
-    trajectory_file = "../Test/trajectories/traj_Glyc_sample.dcd"
+    trajectory_file = "$script_dir/../Test/trajectories/traj_Glyc_sample.dcd"
 end
 
 # Load system PDB file
-system = readPDB("./simulation/equilibrated.pdb")
+system = readPDB("$script_dir/simulation/equilibrated.pdb")
 
 # Select the atoms corresponding to glycerol and water (using PDBTools)
 glyc = select(system,"resname GLLM")
@@ -30,7 +30,7 @@ mddf_glyc = mddf(traj,opt)
 
 # Save results for later analysis
 if full_traj
-    save(mddf_glyc,"./results/mddf_glyc.json")
+    save(mddf_glyc,"$script_dir/results/mddf_glyc.json")
 end
 
 # Compute water-glycerol mddf
@@ -41,5 +41,5 @@ mddf_water_glyc = mddf(traj,opt)
 
 # Save results for later analysis
 if full_traj
-    save(mddf_glyc,"./results/mddf_glyc.json")
+    save(mddf_glyc,"$script_dir/results/mddf_glyc.json")
 end
