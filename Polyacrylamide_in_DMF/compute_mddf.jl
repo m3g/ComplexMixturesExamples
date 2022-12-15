@@ -1,13 +1,19 @@
 using PDBTools
 using ComplexMixtures
+script_dir = @__DIR__
+
+# The full trajectory file is available at: 
+# https://drive.google.com/file/d/1ug43ncCLsBATaJrT9zlbaqK6AORVvhhx/view?usp=sharing
+full_traj = isfile("$script_dir/../test/trajectories/traj_Polyacry.dcd")
+if full_traj
+    trajectory_file = "$script_dir/../test/trajectories/traj_Polyacry.dcd"
+else
+    trajectory_file = "$script_dir/../test/trajectories/traj_Polyacry_sample.dcd"
+    println("WARNING: short trajectory sample: $(normpath(trajectory_file))")
+end
 
 # Load a PDB file of the system
-system = readPDB("./simulation/equilibrated.pdb")
-
-# Trajectory file
-# The trajectory file is available at: 
-# https://drive.google.com/file/d/1ug43ncCLsBATaJrT9zlbaqK6AORVvhhx/view?usp=sharing
-trajectory_file = "../trajectories/traj_Polyacry.dcd"
+system = readPDB("$script_dir/simulation/equilibrated.pdb")
 
 # Select the atoms corresponding DMF molecules
 dmf = select(system,"resname DMF")
@@ -29,7 +35,10 @@ opt = ComplexMixtures.Options(dbulk=20.)
 mddf_dmf_acr = mddf(traj,opt)
 
 # Save results to file for later use
-save(mddf_dmf_acr,"./results/mddf_dmf_acr.json")
+if full_traj
+    save(mddf_dmf_acr,"$script_dir/results/mddf_dmf_acr.json")
+end
+
 
 
 
