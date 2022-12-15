@@ -4,12 +4,12 @@ script_dir = @__DIR__
 
 # The complete trajectory file can be downloaded from (3Gb):
 # https://drive.google.com/file/d/14M30jDHRwUM77hzbDphgbu8mcWFBcQrX/view?usp=sharing
-full_traj = isfile("$script_dir/../../Test/trajectories/glyc50_complete.dcd")
+full_traj = isfile("$script_dir/../../test/trajectories/glyc50_complete.dcd")
 if full_traj
-    trajectory_file = "$script_dir/../../Test/trajectories/glyc50_complete.dcd"
+    trajectory_file = "$script_dir/../../test/trajectories/glyc50_complete.dcd"
 else
-    println("WARNING: will execute calculations with a small trajectory sample.")
-    trajectory_file = "$script_dir/../../Test/trajectories/glyc50_sample.dcd"
+    trajectory_file = "$script_dir/../../test/trajectories/glyc50_sample.dcd"
+    println("WARNING: short trajectory sample: $(normpath(trajectory_file))")
 end
 
 # Load PDB file of the system

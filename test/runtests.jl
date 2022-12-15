@@ -20,7 +20,7 @@ end
 
 @testitem "Polyacrylamide in DMF" begin
     test_dir = @__DIR__
-    if !isfile("$test_dir/../Test/trajectories/traj_Polyacry.dcd")
+    if !isfile("$test_dir/../test/trajectories/traj_Polyacry.dcd")
         println("""
     
         WARNING: Will run tests without recomputing the data: only test trajectory files were found for all or some examples.
@@ -37,7 +37,7 @@ end
 
 @testitem "POPC in Water/Ethanol" begin
     test_dir = @__DIR__
-    if !isfile("$test_dir/../Test/trajectories/traj_POPC.dcd")
+    if !isfile("$test_dir/../test/trajectories/traj_POPC.dcd")
         println("""
     
         WARNING: Will run tests without recomputing the data: only test trajectory files were found for all or some examples.
@@ -54,7 +54,7 @@ end
 
 @testitem "Protein in Glycerol" begin
     test_dir = @__DIR__
-    if !isfile("$test_dir/../Test/trajectories/glyc50_complete.dcd")
+    if !isfile("$test_dir/../test/trajectories/glyc50_complete.dcd")
         println("""
     
         WARNING: Will run tests without recomputing the data: only test trajectory files were found for all or some examples.
