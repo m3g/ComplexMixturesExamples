@@ -13,7 +13,7 @@ test_dir = @__DIR__
 found_all_downloads = isfile("$test_dir/../Test/trajectories/traj_Glyc.dcd")
 found_all_downloads = isfile("$test_dir/../Test/trajectories/traj_POPC.dcd")
 found_all_downloads = isfile("$test_dir/../Test/trajectories/traj_Polyacry.dcd")
-found_all_downloads = isfile("$test_dir/../Test/trajectories/glyc50.dcd")
+found_all_downloads = isfile("$test_dir/../Test/trajectories/glyc50_complete.dcd")
 
 if !found_all_downloads
     println("""
