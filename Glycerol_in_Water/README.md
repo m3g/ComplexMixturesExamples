@@ -10,7 +10,16 @@ The system simulated consists of 1000 water molecules (red) and 1000 glycerol mo
 
 The step by step of this example is split into running the MDDF calculation, in the [compute_mddf.jl](./compute_mddf.jl) file, and extracting the information and plotting, in the [plots.jl](./plots.jl) file. 
 
-The trajectory file, required to run the `compute_mddf.jl` script, is available [here - 250Mb](https://drive.google.com/file/d/1BuXJ8AjBeduMSD2CkDJLDNxAAD2QNNg6/view?usp=sharing). The `plots.jl` script can be executed from the results saved in this repository. 
+The trajectory file, required to run the `compute_mddf.jl` script, is available [here - 250Mb](https://drive.google.com/file/d/1BuXJ8AjBeduMSD2CkDJLDNxAAD2QNNg6/view?usp=sharing). The file must be saved in the `test/trajectories` directory. 
+
+The `plots.jl` script can be executed from the results saved in this repository. 
+
+To run these scripts directly, do:
+```
+cd ComplexMixturesExamples/Glycerol_in_Water
+julia -e compute_mddf.jl
+julia -e plots.jl
+```
 
 ## Glycerol-Glycerol and Water-Glycerol distribution functions
 

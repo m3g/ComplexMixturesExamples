@@ -10,7 +10,16 @@ System image: a POPC membrane (center) solvated by a mixture of water (purple) a
 
 The step by step of this example is split into running the MDDF calculation, in the [compute_mddf.jl](./compute_mddf.jl) file, and extracting the information and plotting, in the [plots.jl](./plots.jl) file. 
 
-The trajectory file, required to run the `compute_mddf.jl` script, is available [here - 300Mb](https://drive.google.com/file/d/12TT5tblkFp1NtFOAQgjjGhmnYaXA8vQi/view?usp=sharing). The `plots.jl` script can be executed from the results saved in this repository. 
+The trajectory file, required to run the `compute_mddf.jl` script, is available [here - 300Mb](https://drive.google.com/file/d/12TT5tblkFp1NtFOAQgjjGhmnYaXA8vQi/view?usp=sharing). The trajectory file must be saved in the `test/trajectories` directory.
+
+The `plots.jl` script can be executed from the results saved in this repository. 
+
+To run these scripts directly, do:
+```
+cd ComplexMixturesExamples/POPC_in_Water-Ethanol
+julia -e compute_mddf.jl
+julia -e plots.jl
+```
 
 ## Distribution functions and KB integrals 
 

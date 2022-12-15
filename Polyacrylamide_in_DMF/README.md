@@ -28,6 +28,14 @@ in the `test/trajectories` directory. The scripts
 
 The `plots.jl` script can be executed from the results saved in this repository. 
 
+To run these scripts directly, do:
+
+```
+cd ComplexMixturesExamples/Polyacrylamide_in_DMF
+julia -e compute_mddf.jl
+julia -e plots.jl
+```
+
 ## Minimum-distance distribution function and KB integral
 
 The distribution of DMF molecules around polyacrylamide is shown below. There is a peak at ~2.5Angs, indicating favorable non-specific interactions between the solvent molecules and the polymer. The peak is followed by a dip and diffuse peaks at higher distances. Thus, the DMF molecules are structured around the polymer, but essentially only in the first solvation shell.  

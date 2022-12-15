@@ -119,7 +119,7 @@ for (imer, mer) in pairs(mers)
         # And from the mer_atoms atoms, filter the ones corresponding to this group
         atoms = filter(at -> at.name in group[1], mer_atoms)
         # Retrive the contribution of these atoms to the MDDF
-        contribs = movavg(contrib(solute,mddf_dmf_acr.solute_atom,atoms),n=10).x
+        contribs = EasyFit.movavg(contrib(solute,mddf_dmf_acr.solute_atom,atoms),n=10).x
         # Concatenate the results to build the 2D matrix
         group_contribs = hcat(group_contribs,contribs)
         # Push label to label list
