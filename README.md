@@ -20,41 +20,32 @@ This repository contains some detailed examples of the use of the [ComplexMixtur
 
 The packages that are used in the script, with, for example, `using PDBTools`, can be installed in Julia using:
 
-```julia-repl
+```julia
 julia> import Pkg
 
 julia> Pkg.add("PDBTools")
-
 ```
 
 or, if you simply type `]` your prompt will become the package manager prompt, `pkg>`, and then you do:
 
-```
+```julia
 (@v1.6) pkg> add PDBTools, ComplexMixtures, LaTeXStrings
-
 ```
 
 ### Running the scripts
 
 Julia compiles the code the first time it is executed. Thus, if you run one of the plotting scripts with, for example
-```
+```bash
 julia plots.jl
 ```
 it will take some time (a minute, perhaps), to produce the figure. If that is the only time you are running the script,
 that is fine. However, if you want to modify the script and test alternative, that waiting is annoying. In that case, 
 *start julia once*, and within `julia`, do:
-```
+```julia
 julia> include("./plots.jl")
 ```
 
 The first time that will take that annoying minute, but if you change the script and include the file again (press the up-arrow
 to repeat the command), the new execution will be very fast. If you are into Julia and want to learn more sophisticated
 workflows for a heavier development of code, see [this post](https://m3g.github.io/JuliaNotes.jl/stable/workflow/). 
-
-
-
-
-
-
-
 
