@@ -2,7 +2,7 @@ using ComplexMixtures
 using PDBTools
 using Plots
 using LaTeXStrings
-using EasyFit
+import EasyFit
 script_dir = @__DIR__
 
 function fig() # to edit/update easily using Revise.jl
@@ -22,9 +22,8 @@ scalefontsizes(); scalefontsizes(1.3)
 # Load system PDB file
 system = readPDB("$script_dir/simulation/equilibrated.pdb")
 
-# Select the atoms corresponding to glycerol and water
+# Select the atoms corresponding to glycerol
 glyc = select(system,"resname GLLM")
-water = select(system,"water")
 
 # Set the solute structure for Glycerol, used to extract atomic contributions
 solute = Selection(glyc,natomspermol=14)
@@ -36,10 +35,10 @@ mddf_water_glyc = load("$script_dir/results/mddf_water_glyc.json")
 # Plot the correlation functions
 plot(layout=(2,1))
 x = mddf_glyc.d # distances
-y = movavg(mddf_glyc.mddf,n=10).x # the mddf (using movavg to smooth noise)
+y = EasyFit.movavg(mddf_glyc.mddf,n=10).x # the mddf (using movavg to smooth noise)
 plot!(x,y,label="Glycerol")
 x = mddf_water_glyc.d
-y = movavg(mddf_water_glyc.mddf,n=10).x
+y = EasyFit.movavg(mddf_water_glyc.mddf,n=10).x
 plot!(x,y,label="Water")
 plot!(
     ylabel="MDDF",
@@ -47,9 +46,9 @@ plot!(
 )
 
 # Plot the KB integrals
-y = movavg(mddf_glyc.kb,n=10).x
+y = EasyFit.movavg(mddf_glyc.kb,n=10).x
 plot!(x,y,subplot=2)
-y = movavg(mddf_water_glyc.kb,n=10).x
+y = EasyFit.movavg(mddf_water_glyc.kb,n=10).x
 plot!(x,y,subplot=2)
 plot!(
     xlabel=L"\textrm{Distance / \AA}",ylabel=L"\textrm{KB~/~cm^3~mol^{-1}}",
@@ -69,11 +68,11 @@ aliphatic_contrib = contrib(solute,mddf_glyc.solvent_atom,aliphatic)
 # Plot group contributions
 plot(layout=(2,1))
 x = mddf_glyc.d
-y = movavg(mddf_glyc.mddf,n=10).x
+y = EasyFit.movavg(mddf_glyc.mddf,n=10).x
 plot!(x,y,label="Total",supblot=1)
-y = movavg(hydroxyl_contrib,n=10).x
+y = EasyFit.movavg(hydroxyl_contrib,n=10).x
 plot!(x,y,label="Hydroxyl contributions",subplot=1)
-y = movavg(aliphatic_contrib,n=10).x
+y = EasyFit.movavg(aliphatic_contrib,n=10).x
 plot!(x,y,label="Aliphatic contributions",subplot=1)
 plot!(
     xlim=(1,8),
@@ -82,14 +81,14 @@ plot!(
 )
 
 x = mddf_water_glyc.d
-y = movavg(mddf_water_glyc.mddf,n=10).x
+y = EasyFit.movavg(mddf_water_glyc.mddf,n=10).x
 plot!(x,y,label="Total",subplot=2)
 hydroxyl_contrib = contrib(solute,mddf_water_glyc.solute_atom,hydroxyls)
 aliphatic_contrib = contrib(solute,mddf_water_glyc.solute_atom,aliphatic)
 
-y = movavg(hydroxyl_contrib,n=10).x
+y = EasyFit.movavg(hydroxyl_contrib,n=10).x
 plot!(x,y,label="Hydroxyl contributions",subplot=2)
-y = movavg(aliphatic_contrib,n=10).x
+y = EasyFit.movavg(aliphatic_contrib,n=10).x
 plot!(x,y,label="Aliphatic contributions",subplot=2)
 plot!(
     xlim=(1,8),

@@ -4,11 +4,12 @@ script_dir = @__DIR__
 
 # The complete trajectory file can be downloaded from (3Gb):
 # https://drive.google.com/file/d/14M30jDHRwUM77hzbDphgbu8mcWFBcQrX/view?usp=sharing
-full_traj = isfile("$script_dir/../Test/trajectories/glyc50_complete.dcd")
+full_traj = isfile("$script_dir/../../Test/trajectories/glyc50_complete.dcd")
 if full_traj
-    trajectory_file = "$script_dir/../Test/trajectories/glyc50_complete.dcd"
+    trajectory_file = "$script_dir/../../Test/trajectories/glyc50_complete.dcd"
 else
-    trajectory_file = "$script_dir/../Test/trajectories/glyc50_sample.dcd"
+    println("WARNING: will execute calculations with a small trajectory sample.")
+    trajectory_file = "$script_dir/../../Test/trajectories/glyc50_sample.dcd"
 end
 
 # Load PDB file of the system
@@ -23,7 +24,7 @@ solute = Selection(protein, nmols=1)
 solvent = Selection(glyc, natomspermol=14)
 
 # Setup the Trajectory structure
-trajectory = Trajectory("$script_dir/../Data/glyc50.dcd", solute, solvent)
+trajectory = Trajectory(trajectory_file, solute, solvent)
 
 # Run the calculation and get results
 results = mddf(trajectory)

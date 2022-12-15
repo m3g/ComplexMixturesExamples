@@ -2,8 +2,10 @@ using ComplexMixtures
 using PDBTools
 using Plots
 using LaTeXStrings
-using EasyFit
+import EasyFit
 script_dir = @__DIR__
+
+function fig() # to use Revise and avoid scope warnings
 
 # Plot defaults
 plot_font = "Computer Modern"
@@ -34,11 +36,11 @@ mddf_dmf_acr = load("$script_dir/results/mddf_dmf_acr.json")
 # Plot the MDDF of DMF relative to PolyACR and its corresponding KB integral
 plot(layout=(2,1))
 x = mddf_dmf_acr.d
-y = movavg(mddf_dmf_acr.mddf,n=10).x
+y = EasyFit.movavg(mddf_dmf_acr.mddf,n=10).x
 plot!(x,y,ylabel="MDDF",subplot=1)
 plot!(xlim=(0,20),subplot=1)
 
-y = movavg(mddf_dmf_acr.kb,n=10).x
+y = EasyFit.movavg(mddf_dmf_acr.kb,n=10).x
 plot!(x,y,xlabel=L"\textrm{Distance / \AA}",ylabel=L"\textrm{KB~/~cm^3~mol^{-1}}",subplot=2)
 plot!(xlim=(0,20),subplot=2)
 savefig("$script_dir/results/mddf_kb.png")
@@ -54,12 +56,12 @@ groups = [
 ]
 plot(layout=(2,1))
 x = mddf_dmf_acr.d
-y = movavg(mddf_dmf_acr.mddf,n=10).x
+y = EasyFit.movavg(mddf_dmf_acr.mddf,n=10).x
 plot!(x,y,label="Total",subplot=1)
 for group in groups
     # Retrieve the contributions of the atoms of this group
     group_contrib = contrib(solvent,mddf_dmf_acr.solvent_atom,group[1])
-    y = movavg(group_contrib,n=10).x
+    y = EasyFit.movavg(group_contrib,n=10).x
     plot!(x,y,label=group[2],subplot=1)
 end
 plot!(
@@ -77,11 +79,11 @@ groups = [
     (["C","H2","H1","CA","HA"],L"\textrm{CHCH_2}"), # backbone
 ]
 x = mddf_dmf_acr.d
-y = movavg(mddf_dmf_acr.mddf,n=10).x
+y = EasyFit.movavg(mddf_dmf_acr.mddf,n=10).x
 plot!(x,y,label="Total",subplot=2)
 for group in groups
     group_contrib = contrib(solute,mddf_dmf_acr.solute_atom,group[1])
-    y = movavg(group_contrib,n=10).x
+    y = EasyFit.movavg(group_contrib,n=10).x
     plot!(x,y,label=group[2],subplot=2)
 end
 plot!(
@@ -141,4 +143,6 @@ contourf(
     margin=5Plots.Measures.mm # adjust margin 
 )
 savefig("$script_dir/results/map2D_acr.png")
+
+end; fig()
 
