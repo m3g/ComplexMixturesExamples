@@ -90,19 +90,20 @@ using Plots, Plots.PlotMeasures, LaTeXStrings
 
 Some default options that make the plots prettier:
 ```julia
-default(fontfamily="Computer Modern",
-        linewidth=2, framestyle=:box, label=nothing, grid=false)
+default(fontfamily="Computer Modern",linewidth=2, framestyle=:box, label=nothing, grid=false)
 ```
 
 First, we will plot the MDDF and the corresponding Kirkwood-Buff integral, which are available in the `results.mddf` and `results.kb` fields of the `results` data set. The distances are available in the `results.d` vector. We also plot here an horizontal line and save the figure as a `pdf` file.  
 
 ```julia
 plot(layout=(1,2))
-plot!(results.d,results.mddf,
-      xlabel=L"r/\AA",ylabel="MDDF",subplot=1)
+plot!(results.d,results.mddf,xlabel=L"r/\AA",ylabel="MDDF",subplot=1)
 hline!([1],linestyle=:dash,linecolor=:gray,subplot=1)
-plot!(results.d,results.kb/1000, #to L/mol
-      xlabel=L"r/\AA",ylabel=L"G_{us}/\mathrm{L~mol^{-1}}",subplot=2)
+plot!(
+    results.d,results.kb/1000, #to L/mol
+    xlabel=L"r/\AA",ylabel=L"G_{us}/\mathrm{L~mol^{-1}}",
+    subplot=2
+)
 plot!(size=(800,300),margin=4mm)
 savefig("./mddf.pdf")
 ```
