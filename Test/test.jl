@@ -48,6 +48,11 @@ dir = "$test_dir/../Protein_in_Glycerol"
 include("$dir/MDDF/mddf.jl")
 include("$dir/Density2D/density2D.jl")
 include("$dir/Density3D/density3D.jl")
+cd("$dir/Density3D")
+run(`vmd -dispdev text -e grid_render.vmd`)
+run(`convert grid.tga grid.png`)
+
+cd(test_dir)
 
 
 
