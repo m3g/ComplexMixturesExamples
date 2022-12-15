@@ -23,7 +23,10 @@ The system simulated consists of 2000 DMF molecules solvating a 5-mer chain of p
 
 The step by step of this example is split into running the MDDF calculation, in the [compute_mddf.jl](./compute_mddf.jl) file, and extracting the information and plotting, in the [plots.jl](./plots.jl) file. 
 
-The trajectory file, required to run the `compute_mddf.jl` script, is available [here - 275Mb](https://drive.google.com/file/d/1ug43ncCLsBATaJrT9zlbaqK6AORVvhhx/view?usp=sharing). The `plots.jl` script can be executed from the results saved in this repository. 
+The trajectory file, required to run the `compute_mddf.jl` script, is available [here - 275Mb](https://drive.google.com/file/d/1ug43ncCLsBATaJrT9zlbaqK6AORVvhhx/view?usp=sharing), and should be saved
+in the `Test/trajectories` directory. The scripts
+
+The `plots.jl` script can be executed from the results saved in this repository. 
 
 ## Minimum-distance distribution function and KB integral
 

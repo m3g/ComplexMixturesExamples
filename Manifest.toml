@@ -2,7 +2,7 @@
 
 julia_version = "1.8.3"
 manifest_format = "2.0"
-project_hash = "5d4c25fd3e7cd8acbd819c249e1eaeef672a35ed"
+project_hash = "5ce4a8ffca3ae8c3e58623849390429084752866"
 
 [[deps.Adapt]]
 deps = ["LinearAlgebra"]
@@ -847,9 +847,9 @@ uuid = "777ac1f9-54b0-4bf8-805c-2214025038e7"
 version = "1.1.0"
 
 [[deps.SnoopPrecompile]]
-git-tree-sha1 = "2a3e0f5f25a88dffc47fe12bcccb0ea7c34a827e"
+git-tree-sha1 = "f604441450a3c0569830946e5b33b78c928e1a85"
 uuid = "66db9d55-30c0-4569-8b51-7e840670fc0c"
-version = "1.0.2"
+version = "1.0.1"
 
 [[deps.Sockets]]
 uuid = "6462fe0b-24de-5631-8697-dd941f90decc"
@@ -938,6 +938,12 @@ version = "0.1.1"
 [[deps.Test]]
 deps = ["InteractiveUtils", "Logging", "Random", "Serialization"]
 uuid = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[[deps.TestItemRunner]]
+deps = ["TOML", "Test", "TestItems"]
+git-tree-sha1 = "724a24752f42117bf071df3fad3d4d0ea780d30e"
+uuid = "f8b46487-2199-4994-9208-9a1283c18c0a"
+version = "0.2.1"
 
 [[deps.TestItems]]
 git-tree-sha1 = "b7aab261a1662071e1c976b18ad2cee88e27d04a"

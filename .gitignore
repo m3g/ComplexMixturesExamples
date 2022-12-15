@@ -28,7 +28,9 @@ docs/site/
 *tmp_files*
 *BAK
 FFTW*
-Test/trajectories/glyc50_complete.dcd
-Test/trajectories/traj_Glyc.dcd
-Test/trajectories/traj_Polyacry.dcd
-Test/trajectories/traj_POPC.dcd
+
+# Complete trajectory files
+glyc50_complete.dcd
+traj_Glyc.dcd
+traj_Polyacry.dcd
+traj_POPC.dcd
