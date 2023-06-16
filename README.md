@@ -2,6 +2,8 @@
 
 This repository contains some detailed examples of the use of the [ComplexMixtures.jl](https://m3g.github.io/ComplexMixtures.jl/stable) package, for the study of the solvation structures of complex systems.
 
+Please make sure you have the [latest version](https://github.com/m3g/ComplexMixtures.jl/releases/tag/v0.6.10+docs1) of the `ComplexMixtures.jl` package installed.
+
 ## Content
 
 - [Protein solvated by water and glycerol](https://github.com/m3g/ComplexMixturesExamples/tree/main/Protein_in_Glycerol)

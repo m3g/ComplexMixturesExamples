@@ -69,8 +69,8 @@ hydroxyls = ["O1","O2","O3","HO1","HO2","HO3"]
 aliphatic = ["C1","C2","C3","H11","H12","H2","H31","H32"]
 
 # Retrieve the contributions of these groups to the MDDFs
-hydroxyl_contrib = contrib(solute,mddf_glyc.solvent_atom,hydroxyls)
-aliphatic_contrib = contrib(solute,mddf_glyc.solvent_atom,aliphatic)
+hydroxyl_contrib = contributions(solute,mddf_glyc.solvent_atom,hydroxyls)
+aliphatic_contrib = contributions(solute,mddf_glyc.solvent_atom,aliphatic)
 
 # Plot group contributions
 x = mddf_glyc.d
@@ -91,8 +91,8 @@ plot!(p,
 x = mddf_water_glyc.d
 y = movavg(mddf_water_glyc.mddf,n=10).x
 plot!(p,x,y,subplot=4)
-hydroxyl_contrib = contrib(solute,mddf_water_glyc.solute_atom,hydroxyls)
-aliphatic_contrib = contrib(solute,mddf_water_glyc.solute_atom,aliphatic)
+hydroxyl_contrib = contributions(solute,mddf_water_glyc.solute_atom,hydroxyls)
+aliphatic_contrib = contributions(solute,mddf_water_glyc.solute_atom,aliphatic)
 
 y = movavg(hydroxyl_contrib,n=10).x
 plot!(p,x,y,subplot=4)
@@ -121,7 +121,7 @@ groups = [
 # Contributions to Glycerol-Glycerol autocorrelation
 group_contrib = zeros(length(mddf_glyc.d),length(groups))
 for (igroup, group) in pairs(groups)
-    group_contrib[:,igroup] .= contrib(solute,mddf_glyc.solute_atom,group[1])
+    group_contrib[:,igroup] .= contributions(solute,mddf_glyc.solute_atom,group[1])
 end
 
 idmin = findfirst( d -> d > 1.5, mddf_glyc.d)
@@ -142,7 +142,7 @@ contourf!(p,
 # Water-glycerol interactions (Glycerol contributions)
 group_contrib = zeros(length(mddf_glyc.d),length(groups))
 for (igroup, group) in pairs(groups)
-    group_contrib[:,igroup] .= contrib(solute,mddf_water_glyc.solute_atom,group[1])
+    group_contrib[:,igroup] .= contributions(solute,mddf_water_glyc.solute_atom,group[1])
 end
 contourf!(p,
     1:length(groups),
