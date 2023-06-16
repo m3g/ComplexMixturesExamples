@@ -87,7 +87,7 @@ rescontrib = zeros(length(R.mddf),length(residues))
 Now, collect the contribution of each residue as a column of the above matrix. The notation `pairs(residues)` returns tuples containg the index `ires` and the corresponding residue. The `.=` symbol sets each element of the corresponding column of the  `rescontrib` matrix to the output of `CM.contrib` (by broadcasting).  
 ```julia
 for (ires,residue) in pairs(residues)
-  rescontrib[:,ires] .= CM.contrib(solute,R.solute_atom,residue)
+  rescontrib[:,ires] .= CM.contributions(solute,R.solute_atom,residue)
 end
 ```
 

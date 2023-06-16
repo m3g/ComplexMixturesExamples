@@ -27,7 +27,7 @@ residues = collect(eachresidue(protein))
 irange = 70:110
 rescontrib = zeros(length(R.mddf), length(residues))
 for (ires, residue) in pairs(residues)
-  rescontrib[:, ires] .= contrib(solute, R.solute_atom, residue)
+  rescontrib[:, ires] .= contributions(solute, R.solute_atom, residue)
 end
 
 # Plot only for distances within 1.5 and 3.5:

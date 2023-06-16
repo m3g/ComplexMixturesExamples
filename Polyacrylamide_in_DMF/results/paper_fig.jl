@@ -61,7 +61,7 @@ y = movavg(mddf_dmf_acr.mddf,n=10).x
 plot!(x,y,label="Total",subplot=3,xticks=:none)
 for group in groups
     # Retrieve the contributions of the atoms of this group
-    group_contrib = contrib(solvent,mddf_dmf_acr.solvent_atom,group[1])
+    group_contrib = contributions(solvent,mddf_dmf_acr.solvent_atom,group[1])
     y = movavg(group_contrib,n=10).x
     plot!(x,y,label=group[2],subplot=3)
 end
@@ -83,7 +83,7 @@ x = mddf_dmf_acr.d
 y = movavg(mddf_dmf_acr.mddf,n=10).x
 plot!(x,y,label="Total",subplot=4)
 for group in groups
-    group_contrib = contrib(solute,mddf_dmf_acr.solute_atom,group[1])
+    group_contrib = contributions(solute,mddf_dmf_acr.solute_atom,group[1])
     y = movavg(group_contrib,n=10).x
     plot!(x,y,label=group[2],subplot=4)
 end
@@ -119,7 +119,7 @@ for (imer, mer) in pairs(mers)
         # And from the mer_atoms atoms, filter the ones corresponding to this group
         atoms = filter(at -> at.name in group[1], mer_atoms)
         # Retrive the contribution of these atoms to the MDDF
-        contribs = movavg(contrib(solute,mddf_dmf_acr.solute_atom,atoms),n=10).x
+        contribs = movavg(contributions(solute,mddf_dmf_acr.solute_atom,atoms),n=10).x
         # Concatenate the results to build the 2D matrix
         group_contribs = hcat(group_contribs,contribs)
         # Push label to label list

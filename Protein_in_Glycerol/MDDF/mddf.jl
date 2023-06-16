@@ -52,8 +52,8 @@ savefig("$script_dir/mddf.pdf")
 # Atomic contributions to the MDDF
 hydroxyls = ["O1", "O2", "O3", "H1", "H2", "H3"]
 aliphatic = ["C1", "C2", "HA", "HB", "HC", "HD"]
-hydr_contrib = contrib(solvent, results.solvent_atom, hydroxyls)
-aliph_contrib = contrib(solvent, results.solvent_atom, aliphatic)
+hydr_contrib = contributions(solvent, results.solvent_atom, hydroxyls)
+aliph_contrib = contributions(solvent, results.solvent_atom, aliphatic)
 
 plot(results.d, results.mddf, xlabel=L"r/\AA", ylabel="mddf", size=(600, 400))
 plot!(results.d, hydr_contrib, label="Hydroxyls")

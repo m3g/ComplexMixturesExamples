@@ -75,7 +75,7 @@ x = mddf_ethanol_POPC.d
 y = EasyFit.movavg(mddf_ethanol_POPC.mddf,n=10).x
 plot(x,y,label="Total")
 for group in groups
-    group_contrib = contrib(solvent,mddf_ethanol_POPC.solvent_atom,group[1])
+    group_contrib = contributions(solvent,mddf_ethanol_POPC.solvent_atom,group[1])
     y = EasyFit.movavg(group_contrib,n=10).x
     plot!(x,y,label=group[2])
 end
@@ -110,7 +110,7 @@ y = EasyFit.movavg(mddf_ethanol_POPC.mddf,n=10).x
 plot(x,y,label="Total")
 for group in groups
     # Retrieve the contributions of the atoms of this group
-    group_contrib = contrib(solute,mddf_ethanol_POPC.solute_atom,group[1])
+    group_contrib = contributions(solute,mddf_ethanol_POPC.solute_atom,group[1])
     y = EasyFit.movavg(group_contrib,n=10).x
     plot!(x,y,label=group[2])
 end
@@ -127,7 +127,7 @@ x = mddf_water_POPC.d
 y = EasyFit.movavg(mddf_water_POPC.mddf,n=10).x
 plot(x,y,label="Total")
 for group in groups
-    group_contrib = contrib(solute,mddf_water_POPC.solute_atom,group[1])
+    group_contrib = contributions(solute,mddf_water_POPC.solute_atom,group[1])
     y = EasyFit.movavg(group_contrib,n=10).x
     plot!(x,y,label=group[2])
 end
@@ -164,7 +164,7 @@ oleoyl_groups = [
 
 gcontrib = zeros(length(mddf_ethanol_POPC.d),length(oleoyl_groups))
 for (ig, group) in pairs(oleoyl_groups)
-    gcontrib[:,ig] .= EasyFit.movavg(contrib(solute,mddf_ethanol_POPC.solute_atom,group[1]),n=10).x
+    gcontrib[:,ig] .= EasyFit.movavg(contributions(solute,mddf_ethanol_POPC.solute_atom,group[1]),n=10).x
 end
 labels = [ oleoyl_groups[i][2] for i in eachindex(oleoyl_groups) ]
 idmin = findfirst( d -> d > 1.5, mddf_ethanol_POPC.d)
@@ -202,7 +202,7 @@ palmitoyl_groups = [
 ]
 gcontrib = zeros(length(mddf_ethanol_POPC.d),length(palmitoyl_groups))
 for (ig, group) in pairs(palmitoyl_groups)
-    gcontrib[:,ig] .= EasyFit.movavg(contrib(solute,mddf_ethanol_POPC.solute_atom,group[1]),n=10).x
+    gcontrib[:,ig] .= EasyFit.movavg(contributions(solute,mddf_ethanol_POPC.solute_atom,group[1]),n=10).x
 end
 labels = [ palmitoyl_groups[i][2] for i in eachindex(palmitoyl_groups) ]
 
@@ -225,7 +225,7 @@ savefig("$script_dir/results/map2D_ethanol_aliphatic_chains.png")
 # And now the same for water-POPC
 gcontrib = zeros(length(mddf_water_POPC.d),length(oleoyl_groups))
 for (ig, group) in pairs(oleoyl_groups)
-    gcontrib[:,ig] .= EasyFit.movavg(contrib(solute,mddf_water_POPC.solute_atom,group[1]),n=10).x
+    gcontrib[:,ig] .= EasyFit.movavg(contributions(solute,mddf_water_POPC.solute_atom,group[1]),n=10).x
 end
 labels = [ oleoyl_groups[i][2] for i in eachindex(oleoyl_groups) ]
 idmin = findfirst( d -> d > 1.5, mddf_water_POPC.d)
@@ -244,7 +244,7 @@ contourf!(
 
 gcontrib = zeros(length(mddf_water_POPC.d),length(palmitoyl_groups))
 for (ig, group) in pairs(palmitoyl_groups)
-    gcontrib[:,ig] .= EasyFit.movavg(contrib(solute,mddf_water_POPC.solute_atom,group[1]),n=10).x
+    gcontrib[:,ig] .= EasyFit.movavg(contributions(solute,mddf_water_POPC.solute_atom,group[1]),n=10).x
 end
 labels = [ palmitoyl_groups[i][2] for i in eachindex(palmitoyl_groups) ]
 idmin = findfirst( d -> d > 1.5, mddf_water_POPC.d)

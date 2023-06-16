@@ -123,8 +123,8 @@ aliphatic = ["C1","C2","HA","HB","HC","HD"]
 The `contrib` function of `ComplexMixtures` will extract from the result the contributions of each set of atoms to the total MDDF:
 
 ```julia
-hydr_contrib = contrib(solvent,results.solvent_atom,hydroxyls)
-aliph_contrib = contrib(solvent,results.solvent_atom,aliphatic)
+hydr_contrib = contributions(solvent,results.solvent_atom,hydroxyls)
+aliph_contrib = contributions(solvent,results.solvent_atom,aliphatic)
 ```
 
 And, finally, here we plot these group contributions on top of the total MDDF:

@@ -75,7 +75,7 @@ x = mddf_ethanol_POPC.d
 y = movavg(mddf_ethanol_POPC.mddf,n=10).x
 plot!(x,y,label="Total",subplot=3)
 for group in groups
-    group_contrib = contrib(solvent,mddf_ethanol_POPC.solvent_atom,group[1])
+    group_contrib = contributions(solvent,mddf_ethanol_POPC.solvent_atom,group[1])
     y = movavg(group_contrib,n=10).x
     plot!(x,y,label=group[2],subplot=3)
 end
@@ -109,7 +109,7 @@ y = movavg(mddf_ethanol_POPC.mddf,n=10).x
 plot!(x,y,label="Total",subplot=4)
 for group in groups
     # Retrieve the contributions of the atoms of this group
-    group_contrib = contrib(solute,mddf_ethanol_POPC.solute_atom,group[1])
+    group_contrib = contributions(solute,mddf_ethanol_POPC.solute_atom,group[1])
     y = movavg(group_contrib,n=10).x
     plot!(x,y,label=group[2],subplot=4)
 end
@@ -126,7 +126,7 @@ x = mddf_water_POPC.d
 y = movavg(mddf_water_POPC.mddf,n=10).x
 plot!(x,y,label="Total",subplot=5)
 for group in groups
-    group_contrib = contrib(solute,mddf_water_POPC.solute_atom,group[1])
+    group_contrib = contributions(solute,mddf_water_POPC.solute_atom,group[1])
     y = movavg(group_contrib,n=10).x
     plot!(x,y,label=group[2],subplot=5)
 end
@@ -163,7 +163,7 @@ oleoyl_groups = [
 
 gcontrib = zeros(length(mddf_ethanol_POPC.d),length(oleoyl_groups))
 for (ig, group) in pairs(oleoyl_groups)
-    gcontrib[:,ig] .= movavg(contrib(solute,mddf_ethanol_POPC.solute_atom,group[1]),n=10).x
+    gcontrib[:,ig] .= movavg(contributions(solute,mddf_ethanol_POPC.solute_atom,group[1]),n=10).x
 end
 labels = [ oleoyl_groups[i][2] for i in 1:length(oleoyl_groups) ]
 idmin = findfirst( d -> d > 1.5, mddf_ethanol_POPC.d)
@@ -201,7 +201,7 @@ palmitoyl_groups = [
 ]
 gcontrib = zeros(length(mddf_ethanol_POPC.d),length(palmitoyl_groups))
 for (ig, group) in pairs(palmitoyl_groups)
-    gcontrib[:,ig] .= movavg(contrib(solute,mddf_ethanol_POPC.solute_atom,group[1]),n=10).x
+    gcontrib[:,ig] .= movavg(contributions(solute,mddf_ethanol_POPC.solute_atom,group[1]),n=10).x
 end
 labels = [ palmitoyl_groups[i][2] for i in 1:length(palmitoyl_groups) ]
 idmin = findfirst( d -> d > 1.5, mddf_ethanol_POPC.d)
@@ -225,7 +225,7 @@ annotate!(  8, 2.7, text("Ethanol-Palmitoyl", :left, 12, plot_font), subplot=7)
 
 gcontrib = zeros(length(mddf_water_POPC.d),length(oleoyl_groups))
 for (ig, group) in pairs(oleoyl_groups)
-    gcontrib[:,ig] .= movavg(contrib(solute,mddf_water_POPC.solute_atom,group[1]),n=10).x
+    gcontrib[:,ig] .= movavg(contributions(solute,mddf_water_POPC.solute_atom,group[1]),n=10).x
 end
 labels = [ oleoyl_groups[i][2] for i in 1:length(oleoyl_groups) ]
 idmin = findfirst( d -> d > 1.5, mddf_water_POPC.d)
@@ -243,7 +243,7 @@ contourf!(
 
 gcontrib = zeros(length(mddf_water_POPC.d),length(palmitoyl_groups))
 for (ig, group) in pairs(palmitoyl_groups)
-    gcontrib[:,ig] .= movavg(contrib(solute,mddf_water_POPC.solute_atom,group[1]),n=10).x
+    gcontrib[:,ig] .= movavg(contributions(solute,mddf_water_POPC.solute_atom,group[1]),n=10).x
 end
 labels = [ palmitoyl_groups[i][2] for i in 1:length(palmitoyl_groups) ]
 idmin = findfirst( d -> d > 1.5, mddf_water_POPC.d)
