@@ -1,4 +1,11 @@
-# ComplexMixtures.jl - Examples
+
+# This repository is no longer maintained. Please refer directly to the examples in the ComplexMixtures documentation, at: 
+# https://m3g.github.io/ComplexMixtures.jl/stable/examples
+
+# The scripts here work with version 1.X of the package, which is no longer the current stable version.
+
+<!--
+## ComplexMixtures.jl - Examples
 
 This repository contains some detailed examples of the use of the [ComplexMixtures.jl](https://m3g.github.io/ComplexMixtures.jl/stable) package, for the study of the solvation structures of complex systems.
 
@@ -50,4 +57,4 @@ julia> include("./plots.jl")
 The first time that will take that annoying minute, but if you change the script and include the file again (press the up-arrow
 to repeat the command), the new execution will be very fast. If you are into Julia and want to learn more sophisticated
 workflows for a heavier development of code, see [this post](https://m3g.github.io/JuliaNotes.jl/stable/workflow/). 
-
+-->
